@@ -1,0 +1,10 @@
+html, body {
+    margin: 0px;
+    height: auto;
+    min-height: 100%;
+    font-family: 'Lato', sans-serif;
+}
+
+* {
+    margin: 0;
+}
