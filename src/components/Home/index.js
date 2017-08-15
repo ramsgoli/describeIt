@@ -35,11 +35,12 @@ class Home extends React.Component {
 
     submit = () => {
         const {mode, name, accessCode} = this.state
+        console.log(mode)
 
         if (mode === 'create') {
             this.props.createGame(name)
         } else if (mode === 'join') {
-            this.props.joinGame({name, accessCode})
+            this.props.joinGame(name, accessCode)
         }
     }
 

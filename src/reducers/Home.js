@@ -1,15 +1,15 @@
 import {fromJS} from 'immutable'
 import Config from 'config'
-import handleErrors from 'Errors'
+import handleErrors from 'reducers/Errors'
 
 // constants
 const CREATE_GAME_START = fromJS('create_game_start')
 const CREATE_GAME_SUCCESS = fromJS('create_game_success')
 const CREATE_GAME_FAILURE = fromJS('create_game_failure')
 
-const JOIN_GAME_START = fromJS('create_game_start')
-const JOIN_GAME_SUCCESS = fromJS('create_game_success')
-const JOIN_GAME_FAILURE = fromJS('create_game_failure')
+const JOIN_GAME_START = fromJS('join_game_start')
+const JOIN_GAME_SUCCESS = fromJS('join_game_success')
+const JOIN_GAME_FAILURE = fromJS('join_game_failure')
 
 // actions
 export const createGameStart = () => {
@@ -50,7 +50,7 @@ export const joinGameFailure = (error) => {
     }
 }
 
-export const joinGame = ({name, accessCode}) => {
+export const joinGame = (name, accessCode) => {
     return dispatch => {
         dispatch(joinGameStart())
 
@@ -84,7 +84,7 @@ export const createGame = ({name}) => {
 const initialState = fromJS({
     _internal: {
         loading: false,
-        errors: []
+        error: []
     },
 })
 
@@ -105,10 +105,21 @@ export const Home = (state=initialState, action) => {
                 val.setIn(['_internal', 'loading'], false)
             })
         }
+        case JOIN_GAME_SUCCESS: {
+            return state.withMutations(val => {
+                val.setIn(['_internal', 'loading'], false)
+            })
+        }
         case CREATE_GAME_FAILURE: {
             return state.withMutations(val => {
                 val.setIn(['_internal', 'loading'], false)
-                val.setIn(['_internal', 'errors'], action.errors)
+                val.setIn(['_internal', 'error'], action.error)
+            })
+        }
+        case JOIN_GAME_FAILURE: {
+            return state.withMutations(val => {
+                val.setIn(['_internal', 'loading'], false)
+                val.setIn(['_internal', 'error'], action.error)
             })
         }
         default:
