@@ -9,11 +9,14 @@ class Button extends React.Component {
     }
 
     render() {
+        /**
+         * primary:
+         */
         return(
-            <div className={css.btn}
+            <div className={css['btn-2a']}
                 onClick={this._onClick}
             >
-                {this.props.text}
+                {this.props.children}
             </div>
         )
     }

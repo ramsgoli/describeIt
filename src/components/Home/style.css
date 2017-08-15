@@ -1,18 +1,4 @@
-.home {
-    width: 500px;
-    margin: 0 auto;
+.wrapper {
     text-align: center;
 }
 
-.buttons-container {
-    display: inline-block;
-    margin: 0 auto;
-}
-
-.create-button {
-
-}
-
-.join-button {
-
-}

@@ -1,5 +1,6 @@
 html, body {
     margin: 0px;
+    box-sizing: border-box;
     height: auto;
     min-height: 100%;
     font-family: 'Lato', sans-serif;
@@ -7,4 +8,8 @@ html, body {
 
 * {
     margin: 0;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
 }

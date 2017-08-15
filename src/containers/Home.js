@@ -11,19 +11,25 @@ class Home extends React.Component {
         return(
             <HomeComponent
                 createGame={this.props.createGame}
+                joinGame={this.props.joinGame}
+                _internal={this.props._internal}
             />
         )
     }
 }
 
 const mapStateToProps = (state) => {
+    const Home = state.Home
+
     return {
+        _internal: Home.get('_internal')
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createGame: bindActionCreators(homeActions.createGameStart, dispatch),
+        createGame: bindActionCreators(homeActions.createGame, dispatch),
+        joinGame: bindActionCreators(homeActions.joinGame, dispatch)
     }
 }
 

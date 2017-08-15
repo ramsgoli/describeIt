@@ -2,7 +2,7 @@ import {createStore, applyMiddleware, combineReducers} from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
-import { Home, createGameStart } from 'reducers/Home'
+import { Home, createGame, joinGame } from 'reducers/Home'
 
 const store = createStore(
     combineReducers({
@@ -15,7 +15,7 @@ const store = createStore(
 )
 
 const homeActions = {
-    createGameStart
+    createGame, joinGame
 }
 
 export {store, homeActions}

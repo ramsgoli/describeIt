@@ -1,4 +1,6 @@
 import {fromJS} from 'immutable'
+import Config from 'config'
+import handleErrors from 'Errors'
 
 // constants
 const CREATE_GAME_START = fromJS('create_game_start')
@@ -41,12 +43,42 @@ export const joinGameSuccess = () => {
     }
 }
 
-export const joinGameFailure = () => {
+export const joinGameFailure = (error) => {
     return {
-        type: JOIN_GAME_FAILURE
+        type: JOIN_GAME_FAILURE,
+        error
     }
 }
 
+export const joinGame = ({name, accessCode}) => {
+    return dispatch => {
+        dispatch(joinGameStart())
+
+        fetch(`${Config.API_URL}/users`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name,
+                accessCode
+            })
+        })
+            .then(handleErrors)
+            .then(resp => resp.json())
+            .catch(error => {
+                dispatch(joinGameFailure(error.response))
+            })
+    }
+}
+
+export const createGame = ({name}) => {
+    return dispatch => {
+        dispatch(createGameStart())
+
+
+    }
+}
 
 // reducer
 const initialState = fromJS({

@@ -11,15 +11,15 @@ class Home extends React.Component {
         accessCode: ''
     }
 
-    newGame = () => {
+    setMode = (mode) => {
         this.setState({
-            mode: 'create'
+            mode: mode
         })
     }
 
-    joinGame = () => {
+    goBack = () => {
         this.setState({
-            mode: 'join'
+            mode: ''
         })
     }
 
@@ -33,61 +33,77 @@ class Home extends React.Component {
         })
     }
 
+    submit = () => {
+        const {mode, name, accessCode} = this.state
 
-    createGame = () => {
-        this.props.createGame()
+        if (mode === 'create') {
+            this.props.createGame(name)
+        } else if (mode === 'join') {
+            this.props.joinGame({name, accessCode})
+        }
     }
 
     render() {
+        if (this.props._internal.get('loading')) {
+            return(
+                <div>Loading...</div>
+            )
+        }
         let content =
             <div className={css.home}>
-                <h1>DescribeIt</h1>
-
-                <div className={css['buttons-container']}>
-                    <Button text="Create Game" onClick={this.newGame} />
-                    <Button text="Join Game" onClick={this.joinGame} />
+                <div>
+                    <Button onClick={() => this.setMode('create')}>Create Game</Button>
+                    <Button onClick={() => this.setMode('join')}>Join Game</Button>
                 </div>
             </div>
 
-        if (this.state.mode == 'create') {
+        if (this.state.mode === 'create') {
             content =
-                <form className={css.createGameField} onChange={this.handleChange}>
-                    <label>
-                        Name:
-                        <input
-                            name="name"
-                            type="text"
-                            value={this.state.name}
-                        />
-                    </label>
-
-                </form>
+                <section>
+                    <form className={css.createGameField} onChange={this.handleChange}>
+                        <label>
+                            Name:
+                            <input
+                                name="name"
+                                type="text"
+                                value={this.state.name}
+                            />
+                        </label>
+                    </form>
+                    <Button onClick={this.submit}>Go</Button>
+                    <Button onClick={this.goBack}>Back</Button>
+                </section>
         }
 
-        if (this.state.mode == 'join') {
+        if (this.state.mode === 'join') {
             content =
-                <form className={css.joinGameField} onChange={this.handleChange}>
-                    <label>
-                        Name:
-                        <input
-                            name="name"
-                            type="text"
-                            value={this.state.name}
-                        />
-                    </label>
-                    <label>
-                        Access Code:
-                        <input
-                            name="accessCode"
-                            type="text"
-                            value={this.state.accessCode}
-                        />
-                    </label>
-                </form>
+                <section>
+                    <form className={css.joinGameField} onChange={this.handleChange}>
+                        <label>
+                            Name:
+                            <input
+                                name="name"
+                                type="text"
+                                value={this.state.name}
+                            />
+                        </label>
+                        <label>
+                            Access Code:
+                            <input
+                                name="accessCode"
+                                type="text"
+                                value={this.state.accessCode}
+                            />
+                        </label>
+                    </form>
+                    <Button onClick={this.submit}>Go</Button>
+                    <Button onClick={this.goBack}>Back</Button>
+                </section>
         }
 
         return(
-            <div className="content-wrapper">
+            <div className={css.wrapper}>
+                <h1>DescribeIt</h1>
                 {content}
             </div>
         )
