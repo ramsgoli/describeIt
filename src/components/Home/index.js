@@ -35,7 +35,6 @@ class Home extends React.Component {
 
     submit = () => {
         const {mode, name, accessCode} = this.state
-        console.log(mode)
 
         if (mode === 'create') {
             this.props.createGame(name)
@@ -67,7 +66,7 @@ class Home extends React.Component {
                             <input
                                 name="name"
                                 type="text"
-                                value={this.state.name}
+                                defaultValue={this.state.name}
                             />
                         </label>
                     </form>
@@ -85,7 +84,7 @@ class Home extends React.Component {
                             <input
                                 name="name"
                                 type="text"
-                                value={this.state.name}
+                                defaultValue={this.state.name}
                             />
                         </label>
                         <label>
@@ -93,7 +92,7 @@ class Home extends React.Component {
                             <input
                                 name="accessCode"
                                 type="text"
-                                value={this.state.accessCode}
+                                defaultValue={this.state.accessCode}
                             />
                         </label>
                     </form>

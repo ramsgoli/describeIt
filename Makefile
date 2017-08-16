@@ -5,4 +5,4 @@ run:
 	docker run --rm -p 80:8080 ramsgoli/reactor:latest
 
 dev:
-	npm run dev
+	export NODE_ENV=0 && npm run dev

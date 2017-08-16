@@ -24,10 +24,10 @@ export const createGameSuccess = () => {
     }
 }
 
-export const createGameFailure = (errors) => {
+export const createGameFailure = (error) => {
     return {
         type: CREATE_GAME_FAILURE,
-        errors
+        error
     }
 }
 
@@ -37,9 +37,10 @@ export const joinGameStart = () => {
     }
 }
 
-export const joinGameSuccess = () => {
+export const joinGameSuccess = (accessCode) => {
     return {
-        type: JOIN_GAME_SUCCESS
+        type: JOIN_GAME_SUCCESS,
+        accessCode
     }
 }
 
@@ -54,18 +55,18 @@ export const joinGame = (name, accessCode) => {
     return dispatch => {
         dispatch(joinGameStart())
 
-        fetch(`${Config.API_URL}/users`, {
+        fetch(`${Config.API_URL}/users/${accessCode}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 name,
-                accessCode
             })
         })
             .then(handleErrors)
             .then(resp => resp.json())
+            .then(resp => dispatch(joinGameSuccess(resp.accessCode)))
             .catch(error => {
                 dispatch(joinGameFailure(error.response))
             })
@@ -76,7 +77,21 @@ export const createGame = ({name}) => {
     return dispatch => {
         dispatch(createGameStart())
 
-
+        fetch(`${Config.API_URL}/users`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name
+            })
+        })
+            .then(handleErrors)
+            .then(resp => resp.json())
+            .then(resp => dispatch(createGameSuccess(resp.accessCode)))
+            .catch(error => {
+                dispatch(createGameFailure(error.response))
+            })
     }
 }
 
@@ -86,6 +101,7 @@ const initialState = fromJS({
         loading: false,
         error: []
     },
+    accessCode: ''
 })
 
 export const Home = (state=initialState, action) => {
@@ -102,7 +118,8 @@ export const Home = (state=initialState, action) => {
         }
         case CREATE_GAME_SUCCESS: {
             return state.withMutations(val => {
-                val.setIn(['_internal', 'loading'], false)
+                val.setIn(['_internal', 'loading'], false),
+                val.set('accessCode', action.accessCode)
             })
         }
         case JOIN_GAME_SUCCESS: {
