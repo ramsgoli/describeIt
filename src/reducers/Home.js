@@ -3,13 +3,13 @@ import Config from 'config'
 import handleErrors from 'reducers/Errors'
 
 // constants
-const CREATE_GAME_START = fromJS('create_game_start')
-const CREATE_GAME_SUCCESS = fromJS('create_game_success')
-const CREATE_GAME_FAILURE = fromJS('create_game_failure')
+const CREATE_GAME_START = Symbol('create_game_start')
+const CREATE_GAME_SUCCESS = Symbol('create_game_success')
+const CREATE_GAME_FAILURE = Symbol('create_game_failure')
 
-const JOIN_GAME_START = fromJS('join_game_start')
-const JOIN_GAME_SUCCESS = fromJS('join_game_success')
-const JOIN_GAME_FAILURE = fromJS('join_game_failure')
+const JOIN_GAME_START = Symbol('join_game_start')
+const JOIN_GAME_SUCCESS = Symbol('join_game_success')
+const JOIN_GAME_FAILURE = Symbol('join_game_failure')
 
 // actions
 export const createGameStart = () => {
@@ -18,9 +18,10 @@ export const createGameStart = () => {
     }
 }
 
-export const createGameSuccess = () => {
+export const createGameSuccess = (accessCode) => {
     return {
-        type: CREATE_GAME_SUCCESS
+        type: CREATE_GAME_SUCCESS,
+        accessCode
     }
 }
 
@@ -99,7 +100,8 @@ export const createGame = ({name}) => {
 const initialState = fromJS({
     _internal: {
         loading: false,
-        error: []
+        error: [],
+        success: false
     },
     accessCode: ''
 })
@@ -118,13 +120,16 @@ export const Home = (state=initialState, action) => {
         }
         case CREATE_GAME_SUCCESS: {
             return state.withMutations(val => {
-                val.setIn(['_internal', 'loading'], false),
+                val.setIn(['_internal', 'loading'], false)
                 val.set('accessCode', action.accessCode)
+                val.setIn(['_internal', 'success'], true)
             })
         }
         case JOIN_GAME_SUCCESS: {
             return state.withMutations(val => {
                 val.setIn(['_internal', 'loading'], false)
+                val.set('accessCode', action.accessCode)
+                val.setIn(['_internal', 'success'], true)
             })
         }
         case CREATE_GAME_FAILURE: {
