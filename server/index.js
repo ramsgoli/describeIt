@@ -13,7 +13,7 @@ app.use(cors({
 const api = require('./api')
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('Hello World from Docker!')
 })
 
 app.use('/api', api)

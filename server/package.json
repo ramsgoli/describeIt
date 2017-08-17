@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-dev": "nodemon index.js"
   },
-  "author": "",
+  "author": "Ram Goli",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.4",
