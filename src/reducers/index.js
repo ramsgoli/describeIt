@@ -8,7 +8,7 @@ import { routerMiddleware, routerReducer } from 'react-router-redux'
 const history = createHistory()
 const routingMiddleware = routerMiddleware(history)
 
-import { Home, createGame, joinGame } from 'reducers/Home'
+import { Home, createGame, joinGame } from './Home'
 
 const store = createStore(
     combineReducers({

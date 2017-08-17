@@ -3,12 +3,11 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 
-import { homeActions } from 'reducers'
+import { homeActions } from '../reducers'
 
-import HomeComponent from 'components/Home'
+import HomeComponent from '../components/Home'
 
 class Home extends React.Component {
-
     componentWillReceiveProps(nextProps) {
         if (nextProps._internal.get('success') === true) {
             this.props.redirectToGame()

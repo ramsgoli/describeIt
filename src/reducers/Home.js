@@ -3,13 +3,13 @@ import Config from 'config'
 import handleErrors from 'reducers/Errors'
 
 // constants
-const CREATE_GAME_START = Symbol('create_game_start')
-const CREATE_GAME_SUCCESS = Symbol('create_game_success')
-const CREATE_GAME_FAILURE = Symbol('create_game_failure')
+const CREATE_GAME_START = Symbol('CREATE_GAME_START')
+const CREATE_GAME_SUCCESS = Symbol('CREATE_GAME_SUCCESS')
+const CREATE_GAME_FAILURE = Symbol('CREATE_GAME_FAILURE')
 
-const JOIN_GAME_START = Symbol('join_game_start')
-const JOIN_GAME_SUCCESS = Symbol('join_game_success')
-const JOIN_GAME_FAILURE = Symbol('join_game_failure')
+const JOIN_GAME_START = Symbol('JOIN_GAME_START')
+const JOIN_GAME_SUCCESS = Symbol('JOIN_GAME_SUCCESS')
+const JOIN_GAME_FAILURE = Symbol('JOIN_GAME_FAILURE')
 
 // actions
 export const createGameStart = () => {
@@ -74,7 +74,7 @@ export const joinGame = (name, accessCode) => {
     }
 }
 
-export const createGame = ({name}) => {
+export const createGame = (name) => {
     return dispatch => {
         dispatch(createGameStart())
 
@@ -100,7 +100,7 @@ export const createGame = ({name}) => {
 const initialState = fromJS({
     _internal: {
         loading: false,
-        error: [],
+        error: '',
         success: false
     },
     accessCode: ''
