@@ -80,7 +80,7 @@ const initialState = fromJS({
     }
 })
 
-export const WaitingRoom = (state=initialState, action) => {
+export const Lobby = (state=initialState, action) => {
     switch(action.type) {
         case START_GAME_START: {
             return state.withMutations(val => {

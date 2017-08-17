@@ -5,6 +5,9 @@ const app = require('express')()
 const server = http.Server(app)
 const io = require('socket.io')(server)
 
+const bodyParser = require('body-parser')
+app.use(bodyParser.json())
+
 const cors = require('cors')
 app.use(cors({
     origin: 'http://localhost:8080'

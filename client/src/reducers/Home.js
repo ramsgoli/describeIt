@@ -56,13 +56,14 @@ export const joinGame = (name, accessCode) => {
     return dispatch => {
         dispatch(joinGameStart())
 
-        fetch(`${Config.API_URL}/users/${accessCode}`, {
+        fetch(`${Config.API_URL}/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 name,
+                accessCode
             })
         })
             .then(handleErrors)
