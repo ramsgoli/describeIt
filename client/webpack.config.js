@@ -40,8 +40,8 @@ module.exports = {
         modules: [path.resolve(__dirname, 'src'), 'node_modules']
     },
     devServer: {
+        historyApiFallback: true,
         contentBase: [path.join(__dirname, 'public')],
-        compress: true,
         port: 8080
     }
 }

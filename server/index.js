@@ -6,6 +6,8 @@ const server = http.Server(app)
 const io = require('socket.io')(server)
 
 const Sequelize = require('sequelize')
+const bodyParser = require('body-parser')
+app.use(bodyParser.json())
 
 const cors = require('cors')
 app.use(cors({

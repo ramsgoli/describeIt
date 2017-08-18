@@ -1,5 +1,7 @@
 import {fromJS} from 'immutable'
 import Config from 'config'
+import {addNotification as notify} from 'reapop'
+
 import handleErrors from 'reducers/Errors'
 
 // constants
@@ -56,18 +58,22 @@ export const joinGame = (name, accessCode) => {
     return dispatch => {
         dispatch(joinGameStart())
 
-        fetch(`${Config.API_URL}/users/${accessCode}`, {
+        fetch(`${Config.API_URL}/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 name,
+                accessCode
             })
         })
             .then(handleErrors)
             .then(resp => resp.json())
-            .then(resp => dispatch(joinGameSuccess(resp.accessCode)))
+            .then(resp => {
+                dispatch(notify({message: `You joined the game ${resp.accessCode}`, status: 'success', position: 'tc'}))
+                dispatch(joinGameSuccess(resp.accessCode))
+            })
             .catch(error => {
                 dispatch(joinGameFailure(error.response))
             })

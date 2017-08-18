@@ -80,7 +80,7 @@ const initialState = fromJS({
     }
 })
 
-export const WaitingRoom = (state=initialState, action) => {
+export const Lobby = (state=initialState, action) => {
     switch(action.type) {
         case START_GAME_START: {
             return state.withMutations(val => {
@@ -90,6 +90,7 @@ export const WaitingRoom = (state=initialState, action) => {
         case START_GAME_SUCCESS: {
             return state.withMutations(val => {
                 val.setIn(['_internal', 'success'], true)
+                val.setIn(['_internal', 'loading'], false)
             })
         }
         case START_GAME_FAILURE: {
@@ -101,5 +102,7 @@ export const WaitingRoom = (state=initialState, action) => {
         case NEW_PLAYER: {
             
         }
+        default:
+            return state
     }
 }

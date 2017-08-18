@@ -5,14 +5,19 @@ import { createLogger } from 'redux-logger'
 import createHistory from 'history/createBrowserHistory'
 import { routerMiddleware, routerReducer } from 'react-router-redux'
 
+import {reducer as notificationsReducer} from 'reapop'
+
 const history = createHistory()
 const routingMiddleware = routerMiddleware(history)
 
 import { Home, createGame, joinGame } from './Home'
+import { Lobby, startGame } from './Lobby'
 
 const store = createStore(
     combineReducers({
         Home,
+        Lobby,
+        notifications: notificationsReducer(),
         router: routerReducer
     }),
     applyMiddleware(
@@ -26,4 +31,8 @@ const homeActions = {
     createGame, joinGame
 }
 
-export {store, history, homeActions}
+const lobbyActions = {
+    startGame
+}
+
+export {store, history, homeActions, lobbyActions}
