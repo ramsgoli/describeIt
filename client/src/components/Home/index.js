@@ -44,7 +44,7 @@ class Home extends React.Component {
     }
 
     render() {
-        if (this.props._internal.get('loading')) {
+        if (this.props._gameInternal.get('loading')) {
             return(
                 <div>Loading...</div>
             )

@@ -3,13 +3,13 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push, replace } from 'react-router-redux'
 
-import { homeActions } from '../reducers'
+import { gameActions, currentPlayerActions } from '../reducers'
 
 import HomeComponent from '../components/Home'
 
 class Home extends React.Component {
     componentWillReceiveProps(nextProps) {
-        if (nextProps._internal.get('success') === true) {
+        if (nextProps.accessCode) {
             this.props.redirectToLobby()
         }
     }
@@ -18,24 +18,26 @@ class Home extends React.Component {
             <HomeComponent
                 createGame={this.props.createGame}
                 joinGame={this.props.joinGame}
-                _internal={this.props._internal}
+                _gameInternal={this.props._gameInternal}
             />
         )
     }
 }
 
 const mapStateToProps = (state) => {
-    const Home = state.Home
+    const Game = state.Game
 
     return {
-        _internal: Home.get('_internal')
+        accessCode: Game.get('accessCode'),
+        _gameInternal: Game.get('_internal')
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createGame: bindActionCreators(homeActions.createGame, dispatch),
-        joinGame: bindActionCreators(homeActions.joinGame, dispatch),
+        createGame: bindActionCreators(gameActions.createGame, dispatch),
+        joinGame: bindActionCreators(gameActions.joinGame, dispatch),
+
         redirectToLobby: bindActionCreators(() => replace('/lobby'), dispatch)
     }
 }

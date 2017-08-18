@@ -10,13 +10,13 @@ import {reducer as notificationsReducer} from 'reapop'
 const history = createHistory()
 const routingMiddleware = routerMiddleware(history)
 
-import { Home, createGame, joinGame } from './Home'
-import { Lobby, startGame } from './Lobby'
+import { Game, createGame, joinGame, startGame } from './Game'
+import { setPlayerName, addSubmission, CurrentPlayer } from './CurrentPlayer'
 
 const store = createStore(
     combineReducers({
-        Home,
-        Lobby,
+        CurrentPlayer,
+        Game,
         notifications: notificationsReducer(),
         router: routerReducer
     }),
@@ -27,12 +27,12 @@ const store = createStore(
     )
 )
 
-const homeActions = {
-    createGame, joinGame
+const gameActions = {
+    createGame, joinGame, startGame
 }
 
-const lobbyActions = {
-    startGame
+const currentPlayerActions = {
+    setPlayerName, addSubmission
 }
 
-export {store, history, homeActions, lobbyActions}
+export {store, history, gameActions, currentPlayerActions}
