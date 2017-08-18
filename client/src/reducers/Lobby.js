@@ -90,6 +90,7 @@ export const Lobby = (state=initialState, action) => {
         case START_GAME_SUCCESS: {
             return state.withMutations(val => {
                 val.setIn(['_internal', 'success'], true)
+                val.setIn(['_internal', 'loading'], false)
             })
         }
         case START_GAME_FAILURE: {
@@ -101,5 +102,7 @@ export const Lobby = (state=initialState, action) => {
         case NEW_PLAYER: {
             
         }
+        default:
+            return state
     }
 }
