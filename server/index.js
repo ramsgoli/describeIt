@@ -5,16 +5,19 @@ const app = require('express')()
 const server = http.Server(app)
 const io = require('socket.io')(server)
 
-const Sequelize = require('sequelize')
-const bodyParser = require('body-parser')
-app.use(bodyParser.json())
-
+const morgan = require('morgan')
 const cors = require('cors')
+const bodyParser = require('body-parser')
+
+const api = require('./api')
+const db = require('./db')
+// midddlewares
+app.use(bodyParser.json())
 app.use(cors({
     origin: 'http://localhost:8080'
 }))
+app.use(morgan('tiny'))
 
-const api = require('./api')
 
 app.get('/', (req, res) => {
     res.send('Hello World from Docker!')
