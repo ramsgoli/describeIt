@@ -11,6 +11,7 @@ const bodyParser = require('body-parser')
 
 const api = require('./api')
 const db = require('./db')
+
 // midddlewares
 app.use(bodyParser.json())
 app.use(cors({

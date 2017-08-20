@@ -11,9 +11,17 @@ services:
         depends_on:
             - postgres
         environment:
-            DATABASE_URL: postgres://describeItApp@postgres/describeIt
+            DATABASE_URL: postgres://describeItApp:describeIt@postgres/describeIt
     postgres:
-        image: postgres:9.6.2-alpine
+        image: postgres:9.6-alpine
         environment:
-            POSTGRES_USER: describeItApp
-            POSTGRES_DB: describeIt
+          POSTGRES_USER: describeItApp
+          POSTGRES_DB: describeIt
+          POSTGRES_PASSWORD: describeIt
+        volumes:
+          - postgres_data:/var/lib/postgresql/data
+        ports:
+          - "127.0.0.1:6432:5432"
+volumes:
+  postgres_data:
+
