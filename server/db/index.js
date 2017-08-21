@@ -24,5 +24,6 @@ db
 
 const User = require('./models/User')(db, Sequelize)
 const Game = require('./models/Game')(db, Sequelize)
+const Submission = require('./models/Submission')(db, Sequelize)
 
-module.exports = { db, User, Game }
+module.exports = { db, User, Game, Submission }

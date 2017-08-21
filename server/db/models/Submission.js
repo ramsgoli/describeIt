@@ -1,16 +1,16 @@
 const Game = require('./Game')
 
 module.exports = (db, Sequelize) => {
-    const User = db.define('User', {
+    const Submission = db.define('Submission', {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        name: {
-            type: Sequelize.STRING
+        text: {
+            type: Sequelize.TEXT,
         },
-        gameID: {
+        userID: {
             type: Sequelize.INTEGER,
             references: {
                 model: Game,
@@ -18,7 +18,7 @@ module.exports = (db, Sequelize) => {
                 deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE // check foreign key constraint immediately
             }
         }
-    });
+    })
 
-    return User
+    return Submission
 }
