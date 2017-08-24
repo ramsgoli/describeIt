@@ -1,8 +1,9 @@
 module.exports = (db, Sequelize) => {
-    const Game = db.define('Game', {
+    const Game = db.define('game', {
         id: {
             type: Sequelize.INTEGER,
-            primaryKey: true
+            primaryKey: true,
+            autoIncrement: true
         },
         accessCode: {
             type: Sequelize.STRING
