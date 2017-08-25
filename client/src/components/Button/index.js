@@ -1,5 +1,5 @@
 import React from 'react'
-import css from './style.css'
+import css from './style.scss'
 
 class Button extends React.Component {
 
@@ -13,7 +13,7 @@ class Button extends React.Component {
          * primary:
          */
         return(
-            <div className={css['btn-2a']}
+            <div className={css.btn}
                 onClick={this._onClick}
             >
                 {this.props.children}

@@ -3,16 +3,18 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push, replace } from 'react-router-redux'
 
-import { gameActions, currentPlayerActions } from '../reducers'
+import { gameActions, gameStates, currentPlayerActions } from '../reducers'
 
 import HomeComponent from '../components/Home'
 
 class Home extends React.Component {
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.accessCode) {
             this.props.redirectToLobby()
         }
     }
+
     render() {
         return(
             <HomeComponent
@@ -29,7 +31,8 @@ const mapStateToProps = (state) => {
 
     return {
         accessCode: Game.get('accessCode'),
-        _gameInternal: Game.get('_internal')
+        _gameInternal: Game.get('_internal'),
+        gameState: Game.get('gameState')
     }
 }
 

@@ -18,6 +18,7 @@ router.post('/', (req, res) => {
     if (req.body.accessCode) {
         // User wants to join an existing game
         accessCode = req.body.accessCode
+
         Game.findOne({
             where: {
                 accessCode
@@ -31,10 +32,10 @@ router.post('/', (req, res) => {
                     name: userName
                 }).then(user => {
                     user.setGame(game)
+                }).then(() => {
+                    return res.json({accessCode})
                 })
             }
-        }).then(() => {
-            return res.json({accessCode})
         })
     } else {
         accessCode = randomstring.generate({

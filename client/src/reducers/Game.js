@@ -14,10 +14,11 @@ THIS FILE MANAGES GENERAL GAME STATE
 Game states
  */
 
-const ERROR_STATE = Symbol('ERROR_STATE')
-const LOBBY_STATE = Symbol('LOBBY_STATE')
-const ACCEPTING_SUBMISSIONS = Symbol('ACCEPTING_SUBMISSIONS')
-const ACCEPTING_VOTES = Symbol('ACCEPTING_VOTES')
+const ERROR_STATE = 'ERROR_STATE'
+const LOBBY_STATE = 'LOBBY_STATE'
+const ACCEPTING_SUBMISSIONS = 'ACCEPTING_SUBMISSIONS'
+const ACCEPTING_VOTES = 'ACCEPTING_VOTES'
+export const gameStates = {ERROR_STATE, LOBBY_STATE, ACCEPTING_SUBMISSIONS, ACCEPTING_VOTES}
 
 
 // constants
@@ -100,7 +101,6 @@ const startGameFailure = (error) => {
 
 export const joinGame = (name, accessCode) => {
     return dispatch => {
-        dispatch(joinGameStart())
         dispatch(setPlayerName(name))
 
         fetch(`${Config.API_URL}/users`, {
@@ -120,14 +120,13 @@ export const joinGame = (name, accessCode) => {
                 dispatch(joinGameSuccess(resp.accessCode))
             })
             .catch(error => {
-                dispatch(joinGameFailure(error.response))
+                dispatch(notify({message: `The game ${accessCode} does not exist`, status: 'error', position: 'tc'}))
             })
     }
 }
 
 export const createGame = (name) => {
     return dispatch => {
-        dispatch(createGameStart())
         dispatch(setPlayerName(name))
 
         fetch(`${Config.API_URL}/users`, {
@@ -143,7 +142,6 @@ export const createGame = (name) => {
             .then(resp => resp.json())
             .then(resp => {
                 dispatch(notify({message: `You joined the game ${resp.accessCode}`, status: 'success', position: 'tc'}))
-                console.log('here')
                 dispatch(createGameSuccess(resp.accessCode))
             })
             .catch(error => {

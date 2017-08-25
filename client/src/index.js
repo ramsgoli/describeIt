@@ -11,7 +11,7 @@ import theme from 'reapop-theme-wybo'
 
 import { store, history } from 'reducers'
 
-import 'index.css'
+import 'index.scss'
 import Home from './containers/Home'
 import Lobby from './containers/Lobby'
 import Game from './containers/Game'

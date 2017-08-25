@@ -1,7 +1,8 @@
 import React from 'react'
 
-import css from './style.css'
+import css from './style.scss'
 import Button from 'components/Button'
+
 
 class Home extends React.Component {
 
@@ -9,6 +10,9 @@ class Home extends React.Component {
         mode: '',
         name: '',
         accessCode: ''
+    }
+
+    componentDidMount() {
     }
 
     setMode = (mode) => {
@@ -44,11 +48,6 @@ class Home extends React.Component {
     }
 
     render() {
-        if (this.props._gameInternal.get('loading')) {
-            return(
-                <div>Loading...</div>
-            )
-        }
         let content =
             <div className={css.home}>
                 <div>
@@ -103,8 +102,10 @@ class Home extends React.Component {
 
         return(
             <div className={css.wrapper}>
-                <h1>DescribeIt</h1>
-                {content}
+                <div className={css.main}>
+                    <h1>DescribeIt</h1>
+                    {content}
+                </div>
             </div>
         )
     }

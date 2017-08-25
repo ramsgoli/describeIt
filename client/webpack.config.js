@@ -16,18 +16,16 @@ module.exports = {
                 loader: 'babel-loader'
             },
             {
-                test: /\.css$/,
+                test: /\.s?css$/,
                 use: ExtractTextPlugin.extract({
                     use: [
-                        {
-                            loader: 'css-loader',
+                        {loader: "css-loader",
                             options: {
-                                modules: true,
                                 minimize: true,
-                                localIdentName: '[name]__[local]___[hash:base64:5]',
-                                importLoaders: 1
+                                modules: true
                             }
-                        }
+                        },
+                        {loader: "sass-loader"},
                     ]
                 })
             }

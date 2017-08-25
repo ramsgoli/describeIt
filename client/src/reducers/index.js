@@ -10,7 +10,7 @@ import {reducer as notificationsReducer} from 'reapop'
 const history = createHistory()
 const routingMiddleware = routerMiddleware(history)
 
-import { Game, createGame, joinGame, startGame } from './Game'
+import { Game, createGame, joinGame, startGame, gameStates } from './Game'
 import { setPlayerName, addSubmission, CurrentPlayer } from './CurrentPlayer'
 
 const store = createStore(
@@ -35,4 +35,7 @@ const currentPlayerActions = {
     setPlayerName, addSubmission
 }
 
-export {store, history, gameActions, currentPlayerActions}
+export {store, history,
+    gameActions, gameStates,
+    currentPlayerActions
+}

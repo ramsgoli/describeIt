@@ -27,7 +27,11 @@ app.get('/', (req, res) => {
 app.use('/api', api)
 
 io.on('connection', socket => {
-    console.log('socket sonnected')
+    console.log(`${socket.id} connected`)
+
+    socket.on('disconnect', () => {
+        console.log(`${socket.id} disconnected`)
+    })
 })
 
 server.listen(8000, () => {

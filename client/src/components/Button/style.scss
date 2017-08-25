@@ -12,32 +12,20 @@
 	letter-spacing: 1px;
 	font-weight: 700;
 	position: relative;
-
     transition: 0.125s ease-in-out;
-}
-
-
-/* Button 2 */
-.btn-2 {
-	composes: btn;
 	background: #cb4e4e;
 	color: #fff;
 	box-shadow: 0 6px #ab3c3c;
-}
-
-/* Button 2a */
-.btn-2a {
-	composes: btn-2;
 	width: 300px;
 	border-radius: 5px;
-}
 
-.btn-2a:hover {
-	box-shadow: 0 4px #ab3c3c;
-    transform: translateY(1px);
-}
+	&:hover {
+		box-shadow: 0 4px #ab3c3c;
+		transform: translateY(1px);
+    }
 
-.btn-2a:active {
-	box-shadow: 0 0 #ab3c3c;
-    transform: translateY(4px);
+	&:active {
+		box-shadow: 0 0 #ab3c3c;
+		transform: translateY(4px);
+	}
 }
