@@ -15,10 +15,11 @@ Game states
  */
 
 const ERROR_STATE = 'ERROR_STATE'
+const NULL_STATE = 'NULL_STATE'
 const LOBBY_STATE = 'LOBBY_STATE'
 const ACCEPTING_SUBMISSIONS = 'ACCEPTING_SUBMISSIONS'
 const ACCEPTING_VOTES = 'ACCEPTING_VOTES'
-export const gameStates = {ERROR_STATE, LOBBY_STATE, ACCEPTING_SUBMISSIONS, ACCEPTING_VOTES}
+export const gameStates = {ERROR_STATE, NULL_STATE, LOBBY_STATE, ACCEPTING_SUBMISSIONS, ACCEPTING_VOTES}
 
 
 // constants
@@ -173,7 +174,7 @@ export const startGame = (accessCode) => {
 
 const initialState = fromJS({
     accessCode: '',
-    gameState: LOBBY_STATE,
+    gameState: NULL_STATE,
     _internal: {
         loading: false,
         errors: []
@@ -191,13 +192,13 @@ export const Game = (state=initialState, action) => {
         case CREATE_GAME_SUCCESS: {
             return state.withMutations(val => {
                 val.set('accessCode', action.accessCode)
-                val.setIn(['_internal', 'loading'], false)
+                val.set('gameState', LOBBY_STATE)
             })
         }
         case JOIN_GAME_SUCCESS: {
             return state.withMutations(val => {
                 val.set('accessCode', action.accessCode)
-                val.setIn(['_internal', 'loading'], true)
+                val.set('gameState', LOBBY_STATE)
             })
         }
         case CREATE_GAME_FAILURE: {
