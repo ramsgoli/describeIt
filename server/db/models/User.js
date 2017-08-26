@@ -9,6 +9,9 @@ module.exports = (db, Sequelize) => {
         name: {
             type: Sequelize.STRING
         },
+        socketId: {
+            type: Sequelize.STRING
+        }
     });
 
     return User

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import css from './style.scss'
-import Button from 'components/Button'
+import Button from '../../components/Button'
 
 
 class Home extends React.Component {

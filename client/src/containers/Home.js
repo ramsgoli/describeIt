@@ -1,18 +1,19 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { push, replace } from 'react-router-redux'
 
 import { gameActions, gameStates, currentPlayerActions } from '../reducers'
 
 import HomeComponent from '../components/Home'
+import SocketManager from '../Socket'
 
 class Home extends React.Component {
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.accessCode) {
-            this.props.redirectToLobby()
-        }
+    componentDidMount() {
+        this.socketManager = SocketManager
+        this.socketManager.socket.on('connect', () => {
+            this.props.setSocketId(this.socketManager.socket.id)
+        })
     }
 
     render() {
@@ -40,8 +41,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         createGame: bindActionCreators(gameActions.createGame, dispatch),
         joinGame: bindActionCreators(gameActions.joinGame, dispatch),
-
-        redirectToLobby: bindActionCreators(() => replace('/lobby'), dispatch)
+        setSocketId: bindActionCreators(gameActions.setSocketId, dispatch)
     }
 }
 

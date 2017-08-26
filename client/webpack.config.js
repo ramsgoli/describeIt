@@ -40,6 +40,8 @@ module.exports = {
     devServer: {
         historyApiFallback: true,
         contentBase: [path.join(__dirname, 'public')],
+        host: '0.0.0.0',
+        disableHostCheck: true,
         port: 8080
     }
 }

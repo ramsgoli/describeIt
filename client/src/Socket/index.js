@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 
-class Socket {
+class SocketManager {
     constructor() {
         this.socket = io.connect('http://localhost:8000')
     }
@@ -10,4 +10,4 @@ class Socket {
     }
 }
 
-export default new Socket()
+export default new SocketManager()

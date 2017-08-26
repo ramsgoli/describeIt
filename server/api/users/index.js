@@ -13,6 +13,7 @@ const { User, Game } = require('../../db')
  */
 router.post('/', (req, res) => {
     const userName = req.body.name
+    const socketId = req.body.socketId
     let accessCode
 
     if (req.body.accessCode) {
@@ -29,7 +30,8 @@ router.post('/', (req, res) => {
             } else {
                 // Create a new user
                 User.create({
-                    name: userName
+                    name: userName,
+                    socketId
                 }).then(user => {
                     user.setGame(game)
                 }).then(() => {
@@ -46,7 +48,8 @@ router.post('/', (req, res) => {
             accessCode
         }).then(game => {
             User.create({
-                name: userName
+                name: userName,
+                socketId
             }).then(user => {
                 user.setGame(game)
             })
