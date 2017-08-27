@@ -4,11 +4,16 @@ import style from './style.scss'
 
 class Lobby extends React.Component {
     render() {
+        console.log(this.props.players)
         return (
             <div className={style.wrapper}>
                 <div className={style.content}>
                     <h1>Lobby</h1>
                     <p>{this.props.accessCode}</p>
+                    <p>Current Player: {this.props.currentPlayer}</p>
+                    {this.props.players.forEach(player => {
+                        return <p>{player}</p>
+                    })}
                 </div>
             </div>
         )

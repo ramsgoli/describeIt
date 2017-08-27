@@ -12,6 +12,8 @@ class LobbyContainer extends React.Component {
            <Lobby
                accessCode={this.props.accessCode}
                startGame={this.props.startGame}
+               currentPlayer={this.props.currentPlayer}
+               players={this.props.players}
            />
         )
     }
@@ -19,9 +21,13 @@ class LobbyContainer extends React.Component {
 
 const mapStateToProps = state => {
     const Game = state.Game
+    const CurrentPlayer = state.CurrentPlayer
+    const Players = state.Players
 
     return {
-        accessCode: Game.get('accessCode')
+        accessCode: Game.get('accessCode'),
+        currentPlayer: CurrentPlayer.get('name'),
+        players: Players.get('players').map(player => player.name)
     }
 }
 

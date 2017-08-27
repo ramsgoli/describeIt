@@ -14,6 +14,10 @@ const { User, Game } = require('../../db')
 router.post('/', (req, res) => {
     const userName = req.body.name
     const socketId = req.body.socketId
+
+    //try to get the socket from the socketid
+    const socket = req.io.sockets.connected[socketId]
+
     let accessCode
 
     if (req.body.accessCode) {
@@ -28,13 +32,16 @@ router.post('/', (req, res) => {
             if (!game) {
                 return res.status(404).json({error: 'No game found'})
             } else {
+                // Add socket to the room by accessCode
+                socket.join(accessCode)
+
                 // Create a new user
                 User.create({
                     name: userName,
                     socketId
                 }).then(user => {
                     user.setGame(game)
-                }).then(() => {
+                    req.io.to(accessCode).emit('newPlayer', user.toJSON())
                     return res.json({accessCode})
                 })
             }
@@ -43,6 +50,8 @@ router.post('/', (req, res) => {
         accessCode = randomstring.generate({
             length: 5
         })
+        // Add socket to the room by accessCode
+        socket.join(accessCode)
 
         Game.create({
             accessCode
