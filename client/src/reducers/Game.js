@@ -5,6 +5,7 @@ import { addNotification as notify } from 'reapop'
 import Config from '../config'
 
 import { setPlayerName } from './CurrentPlayer'
+import { setPlayers } from './Players'
 
 /*
 THIS FILE MANAGES GENERAL GAME STATE
@@ -129,6 +130,7 @@ export const joinGame = (name, accessCode) => {
             .then(resp => resp.json())
             .then(resp => {
                 dispatch(notify({message: `You joined the game ${resp.accessCode}`, status: 'success', position: 'tc'}))
+                dispatch(setPlayers(resp.players))
                 dispatch(joinGameSuccess(resp.accessCode))
             })
             .catch(error => {

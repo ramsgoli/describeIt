@@ -14,5 +14,30 @@ module.exports = (db, Sequelize) => {
         }
     });
 
+    /*
+    Class level methods
+     */
+    User.getPlayersInGame = function(accessCode) {
+        return this.findAll({
+            where: {
+                accessCode
+            }
+        })
+    }
+
+    /*
+    Instance level Methods
+     */
+    User.prototype.getOtherPlayers = function() {
+        return User.findAll({
+            where: {
+                gameId: this.gameId,
+                id: {
+                    $not: this.id
+                }
+            }
+        })
+    }
+
     return User
 }

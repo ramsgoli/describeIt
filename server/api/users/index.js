@@ -41,8 +41,14 @@ router.post('/', (req, res) => {
                     socketId
                 }).then(user => {
                     user.setGame(game)
-                    req.io.to(accessCode).emit('newPlayer', user.toJSON())
-                    return res.json({accessCode})
+
+                    // let all other sockets know that a new player has joined
+                    socket.broadcast.to(accessCode).emit('newPlayer', user.toJSON())
+
+                    //get all other players in this game
+                    return user.getOtherPlayers()
+                }).then(players => {
+                    return res.json({accessCode, players})
                 })
             }
         })
@@ -61,9 +67,8 @@ router.post('/', (req, res) => {
                 socketId
             }).then(user => {
                 user.setGame(game)
+                res.json({accessCode})
             })
-        }).then(() => {
-            res.json({accessCode})
         })
     }
 
