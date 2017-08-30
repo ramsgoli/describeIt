@@ -167,9 +167,10 @@ export const createGame = (name) => {
     }
 }
 
-export const startGame = (accessCode) => {
-    return dispatch => {
-        dispatch(startGameStart())
+export const startGame = () => {
+    return (dispatch, getState) => {
+
+        const { Game } = getState()
 
         fetch(`${Config.API_URL}/games`, {
             method: 'POST',
@@ -177,7 +178,7 @@ export const startGame = (accessCode) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                accessCode
+                accessCode: Game.get('accessCode')
             })
         })
             .then(handleErrors)

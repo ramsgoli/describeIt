@@ -15,6 +15,10 @@ module.exports = server => {
                 },
                 include: [Game]
             }).then(user => {
+                if (!user) {
+                    // user was not registered to play. nothing to do
+                    return
+                }
                 socket.broadcast.to(user.game.accessCode).emit('removePlayer', user.toJSON())
 
                 //delete row from db

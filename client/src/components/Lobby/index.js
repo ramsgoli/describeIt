@@ -1,10 +1,10 @@
 import React from 'react'
+import Button from '../Button'
 
 import style from './style.scss'
 
 class Lobby extends React.Component {
     render() {
-        console.log(this.props.players)
         return (
             <div className={style.wrapper}>
                 <div className={style.content}>
@@ -14,6 +14,7 @@ class Lobby extends React.Component {
                     {this.props.players.map(player => (
                         <p key={player.id}>{player.name}</p>
                     ))}
+                    <Button onClick={this.props.startGame}>Start Game</Button>
                 </div>
             </div>
         )

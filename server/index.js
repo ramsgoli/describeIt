@@ -24,9 +24,9 @@ app.use(function(req, res, next){
 
 app.use(bodyParser.json())
 app.use(cors({
-    origin: 'http://localhost:8080'
+    origin: 'http://localhost:8080' // for development
 }))
-app.use(morgan('tiny'))
+app.use(morgan('tiny')) // logging
 
 
 app.get('/', (req, res) => {

@@ -6,5 +6,6 @@ router.get('/', (req, res) => {
 })
 
 router.use('/users', require('./users'))
+router.use('/games', require('./games'))
 
 module.exports = router

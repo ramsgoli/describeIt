@@ -53,9 +53,13 @@ router.post('/', (req, res) => {
             }
         })
     } else {
+        // User wants to create a new game. Generate an access code
         accessCode = randomstring.generate({
+            capitalization: 'lowercase',
+            charset: 'alphabetic',
             length: 5
         })
+
         // Add socket to the room by accessCode
         socket.join(accessCode)
 
