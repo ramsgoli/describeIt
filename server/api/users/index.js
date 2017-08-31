@@ -31,26 +31,31 @@ router.post('/', (req, res) => {
         }).then(game => {
             if (!game) {
                 return res.status(404).json({error: 'No game found'})
-            } else {
-                // Add socket to the room by accessCode
-                socket.join(accessCode)
-
-                // Create a new user
-                User.create({
-                    name: userName,
-                    socketId
-                }).then(user => {
-                    user.setGame(game)
-
-                    // let all other sockets know that a new player has joined
-                    socket.broadcast.to(accessCode).emit('newPlayer', user.toJSON())
-
-                    //get all other players in this game
-                    return user.getOtherPlayers()
-                }).then(players => {
-                    return res.json({accessCode, players})
-                })
             }
+
+            if (game.getDataValue('gameState') === 'SUBMISSIONS_STATE') {
+                // can't join game that has already begun
+                return res.status(403).json({error: 'The specified game has already begun'})
+            }
+
+            // Add socket to the room by accessCode
+            socket.join(accessCode)
+
+            // Create a new user
+            User.create({
+                name: userName,
+                socketId
+            }).then(user => {
+                user.setGame(game)
+
+                // let all other sockets know that a new player has joined
+                socket.broadcast.to(accessCode).emit('newPlayer', user.toJSON())
+
+                //get all other players in this game
+                return user.getOtherPlayers()
+            }).then(players => {
+                return res.json({accessCode, players})
+            })
         })
     } else {
         // User wants to create a new game. Generate an access code

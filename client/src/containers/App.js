@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 
 import Home from './Home'
 import Lobby from './Lobby'
+import SubmissionsContainer from './Submissions'
 import { gameStates } from '../reducers/index'
 
 class App extends React.Component {
@@ -20,6 +21,10 @@ class App extends React.Component {
             }
             case gameStates.LOBBY_STATE: {
                 gameComponent = <Lobby />
+                break
+            }
+            case gameStates.SUBMISSIONS_STATE: {
+                gameComponent = <SubmissionsContainer />
                 break
             }
             default: {
@@ -49,4 +54,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps)(App)

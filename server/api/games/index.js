@@ -18,8 +18,15 @@ router.post('/', (req, res) => {
             return res.status(404).json({error: 'Specified game was not found'})
         }
 
+        // set game state to SUBMISSIONS_STATE
         game.startGame()
         return res.json({game: game.toJSON()})
+    })
+})
+
+router.get('/', (req, res) => {
+    Game.findAll().then(games => {
+        return res.json({games: games})
     })
 })
 

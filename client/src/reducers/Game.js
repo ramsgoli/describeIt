@@ -18,9 +18,9 @@ Game states
 const ERROR_STATE = 'ERROR_STATE'
 const NULL_STATE = 'NULL_STATE'
 const LOBBY_STATE = 'LOBBY_STATE'
-const ACCEPTING_SUBMISSIONS = 'ACCEPTING_SUBMISSIONS'
-const ACCEPTING_VOTES = 'ACCEPTING_VOTES'
-export const gameStates = {ERROR_STATE, NULL_STATE, LOBBY_STATE, ACCEPTING_SUBMISSIONS, ACCEPTING_VOTES}
+const SUBMISSIONS_STATE = 'SUBMISSIONS_STATE'
+const VOTING_STATE = 'VOTING_STATE'
+export const gameStates = {ERROR_STATE, NULL_STATE, LOBBY_STATE, SUBMISSIONS_STATE, VOTING_STATE}
 
 
 // constants
@@ -89,9 +89,10 @@ const startGameStart = () => {
     }
 }
 
-const startGameSuccess = () => {
+const startGameSuccess = (game) => {
     return {
-        type: START_GAME_SUCCESS
+        type: START_GAME_SUCCESS,
+        game
     }
 }
 
@@ -134,7 +135,7 @@ export const joinGame = (name, accessCode) => {
                 dispatch(joinGameSuccess(resp.accessCode))
             })
             .catch(error => {
-                dispatch(notify({message: `The game ${accessCode} does not exist`, status: 'error', position: 'tc'}))
+                dispatch(notify({message: error.response.statusText, status: error.response.status, position: 'tc'}))
             })
     }
 }
@@ -182,7 +183,10 @@ export const startGame = () => {
             })
         })
             .then(handleErrors)
-            .then(dispatch(startGameSuccess()))
+            .then(resp => resp.json())
+            .then(resp => {
+                dispatch(startGameSuccess(resp.game))
+            })
             .catch(error => {
                 dispatch(startGameFailure(error))
             })
@@ -229,6 +233,11 @@ export const Game = (state=initialState, action) => {
             return state.withMutations(val => {
                 val.set('gameState', ERROR_STATE)
                 val.setIn(['_internal', 'errors'], val.getIn(['_internal', 'errors']).push(action.error))
+            })
+        }
+        case START_GAME_SUCCESS: {
+            return state.withMutations(val => {
+                val.set('gameState', action.game.gameState)
             })
         }
         case SET_SOCKET_ID: {

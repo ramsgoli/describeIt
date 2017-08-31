@@ -11,14 +11,12 @@ module.exports = (db, Sequelize) => {
         gameState: {
             type: Sequelize.STRING,
             defaultValue: 'LOBBY_STATE',
-            validate: {
-                isIn: [[
-                    'ERROR_STATE',
-                    'LOBBY_STATE',
-                    'SUBMISSIONS_STATE',
-                    'VOTING_STATE'
-                ]]
-            }
+            isIn: [[
+                'ERROR_STATE',
+                'LOBBY_STATE',
+                'SUBMISSIONS_STATE',
+                'VOTING_STATE'
+            ]]
         }
     })
 
@@ -28,6 +26,8 @@ module.exports = (db, Sequelize) => {
 
     Game.prototype.startGame = function() {
         this.setDataValue('gameState', 'SUBMISSIONS_STATE')
+        // Persist the data by calling save()
+        this.save()
     }
 
     return Game
