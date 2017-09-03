@@ -1,7 +1,54 @@
+@import '../../styles/vars';
+
+
 .wrapper {
-  text-align: center
+  height: 100vh;
+  min-height: 100%;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  background-color: $blue;
+
 }
 
-.content {
-  margin-top: 100px;
+.accessCode{
+  display: inline-block;
+  width: 150px;
+  height: 100px;
+  margin-top: 40px;
+  border-radius: 5px;
+  color: $white;
+  background-color: $dark-blue;
+
+  h1 {
+    margin-top: 25px;
+    font-weight: 400;
+  }
+  hr {
+    border-top: 2px solid $white;
+    margin: 3px auto;
+    width: 100px;
+  }
 }
+
+.table {
+  width: 250px;
+  height: 60%;
+  margin: 20px auto;
+  color: white;
+  text-align: left;
+  border: 3px solid $white;
+  overflow: scroll;
+}
+
+.row {
+  padding: 10px;
+  vertical-align: top;
+  white-space: nowrap;
+
+  &:nth-child(2n-1) {
+    background-color: $dark-blue;
+  }
+}
+

@@ -4,28 +4,33 @@
 	border: none;
 	font-family: inherit;
 	font-size: inherit;
-	color: inherit;
 	cursor: pointer;
-	padding: 25px 80px;
+	padding: 25px 0px;
 	display: inline-block;
 	margin: 15px 30px;
 	letter-spacing: 1px;
 	font-weight: 700;
 	position: relative;
     transition: 0.125s ease-in-out;
-	background: #cb4e4e;
 	color: #fff;
-	box-shadow: 0 6px #ab3c3c;
-	width: 300px;
-	border-radius: 5px;
+	width: 250px;
+	border-radius: 50px;
+	outline: 0;
+}
+
+.btnSuccess {
+	composes: btn;
+	background: #6BE886;
+	box-shadow: 0 6px #158D2F;
 
 	&:hover {
-		box-shadow: 0 4px #ab3c3c;
 		transform: translateY(1px);
-    }
+		box-shadow: 0 4px #158D2F;
+	}
 
 	&:active {
-		box-shadow: 0 0 #ab3c3c;
+		box-shadow: 0 0 #158D2F;
 		transform: translateY(4px);
 	}
 }
+

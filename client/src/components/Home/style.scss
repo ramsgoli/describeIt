@@ -1,7 +1,36 @@
+@import '../../styles/vars';
+
 .wrapper {
-    text-align: center;
+    background-color: $green;
+    position: absolute;
+    height: 100%;
+    width: 100%;
 }
 
 .main {
-    margin-top: 100px;
+    margin-top: 200px;
+    text-align: center;
+
+    h1 {
+        font-size: 4em;
+        font-weight: 400;
+        color: white;
+    }
+}
+
+.createGameField {
+    height: 50px;
+
+    input {
+        padding: 6px;
+        margin-top: 5px;
+    }
+}
+
+.joinGameField {
+    height: 50px;
+
+    input {
+        padding: 6px;
+    }
 }

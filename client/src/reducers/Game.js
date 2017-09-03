@@ -130,7 +130,6 @@ export const joinGame = (name, accessCode) => {
             .then(handleErrors)
             .then(resp => resp.json())
             .then(resp => {
-                dispatch(notify({message: `You joined the game ${resp.accessCode}`, status: 'success', position: 'tc'}))
                 dispatch(setPlayers(resp.players))
                 dispatch(joinGameSuccess(resp.accessCode))
             })
@@ -159,7 +158,6 @@ export const createGame = (name) => {
             .then(handleErrors)
             .then(resp => resp.json())
             .then(resp => {
-                dispatch(notify({message: `You joined the game ${resp.accessCode}`, status: 'success', position: 'tc'}))
                 dispatch(createGameSuccess(resp.accessCode))
             })
             .catch(error => {

@@ -3,8 +3,7 @@ import css from './style.scss'
 
 class Button extends React.Component {
 
-    _onClick = (e) => {
-        e.preventDefault()
+    _onClick = () => {
         this.props.onClick()
     }
 
@@ -12,8 +11,9 @@ class Button extends React.Component {
         /**
          * primary:
          */
+
         return(
-            <button className={css.btn}
+            <button className={css.btnSuccess}
                 onClick={this._onClick}
             >
                 {this.props.children}

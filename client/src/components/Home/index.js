@@ -49,7 +49,7 @@ class Home extends React.Component {
 
     render() {
         let content =
-            <div className={css.home}>
+            <div className={css.btnContainer}>
                 <div>
                     <Button onClick={() => this.setMode('create')}>Create Game</Button>
                     <Button onClick={() => this.setMode('join')}>Join Game</Button>
@@ -59,15 +59,13 @@ class Home extends React.Component {
         if (this.state.mode === 'create') {
             content =
                 <section>
-                    <form className={css.createGameField} onChange={this.handleChange}>
-                        <label>
-                            Name:
-                            <input
-                                name="name"
-                                type="text"
-                                defaultValue={this.state.name}
-                            />
-                        </label>
+                    <form className={css.createGameField} onChange={this.handleChange} onSubmit={e => e.preventDefault()}>
+                        <input
+                            name="name"
+                            type="text"
+                            placeholder="name"
+                            defaultValue={this.state.name}
+                        />
                     </form>
                     <Button onClick={this.submit}>Go</Button>
                     <Button onClick={this.goBack}>Back</Button>
@@ -78,22 +76,18 @@ class Home extends React.Component {
             content =
                 <section>
                     <form className={css.joinGameField} onChange={this.handleChange}>
-                        <label>
-                            Name:
-                            <input
-                                name="name"
-                                type="text"
-                                defaultValue={this.state.name}
-                            />
-                        </label>
-                        <label>
-                            Access Code:
-                            <input
-                                name="accessCode"
-                                type="text"
-                                defaultValue={this.state.accessCode}
-                            />
-                        </label>
+                        <input
+                            name="name"
+                            type="text"
+                            placeholder="name"
+                            defaultValue={this.state.name}
+                        />
+                        <input
+                            name="accessCode"
+                            placeholder="access code"
+                            type="text"
+                            defaultValue={this.state.accessCode}
+                        />
                     </form>
                     <Button onClick={this.submit}>Go</Button>
                     <Button onClick={this.goBack}>Back</Button>

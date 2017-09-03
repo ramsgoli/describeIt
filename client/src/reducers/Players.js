@@ -57,17 +57,17 @@ export const Players = (state=initialState, action) => {
     switch(action.type) {
         case ADD_PLAYER: {
             return state.withMutations(val => {
-                val.set('players', val.get('players').push(action.player))
+                val.set('players', val.get('players').push(fromJS(action.player)))
             })
         }
         case SET_PLAYERS: {
             return state.withMutations(val => {
-                val.set('players', List(action.players))
+                val.set('players', fromJS(fromJS(action.players)))
             })
         }
         case REMOVE_PLAYER: {
             return state.withMutations(val => {
-               val.set('players', val.get('players').filter(player => player.id !== action.player.id))
+               val.set('players', val.get('players').filter(player => player.get('id') !== action.player.id))
             })
         }
         default:

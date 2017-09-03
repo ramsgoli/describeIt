@@ -5,10 +5,6 @@ import { connect } from 'react-redux'
 import GameComponent from '../components/Game'
 
 class Game extends React.Component {
-    componentWillReceiveProps(nextProps) {
-
-    }
-
     render() {
         return(
            <GameComponent />
