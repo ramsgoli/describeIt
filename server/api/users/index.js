@@ -54,7 +54,10 @@ router.post('/', (req, res) => {
                 //get all other players in this game
                 return user.getOtherPlayers()
             }).then(players => {
-                return res.json({accessCode, players})
+                return res.json({
+                    accessCode,
+                    players: players.map(player => player.public())
+                })
             })
         })
     } else {

@@ -25,10 +25,12 @@ db
 const User = require('./models/User')(db, Sequelize)
 const Game = require('./models/Game')(db, Sequelize)
 const Submission = require('./models/Submission')(db, Sequelize)
+const Question = require('./models/Question')(db, Sequelize)
 
 // Define associations
 User.belongsTo(Game) // User has a gameId attribute
+Question.hasOne(Game) // Game has a questionId attribute
 
 db.sync()
 
-module.exports = { db, User, Game, Submission }
+module.exports = { db, User, Game, Submission, Question }

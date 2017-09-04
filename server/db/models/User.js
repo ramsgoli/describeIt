@@ -7,7 +7,7 @@ module.exports = (db, Sequelize) => {
             autoIncrement: true
         },
         name: {
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
         },
         socketId: {
             type: Sequelize.STRING
@@ -37,6 +37,13 @@ module.exports = (db, Sequelize) => {
                 }
             }
         })
+    }
+
+    User.prototype.public = function() {
+        return {
+            name: this.name,
+            id: this.id
+        }
     }
 
     return User

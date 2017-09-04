@@ -1,12 +1,11 @@
-# Reactor
+# DescribeIt
 
-My go-to config for react projects
+Play with your friends, and see how well you really know each other
 
-## Features
-* modular css
-* babel-env
-
-## Usage
+## Questions
+- If you want to submit a question that contains a player's name, make sure to include `{{player}}` somewhere in the question
+- For example: `Describe {{player}}'s favorite dream`
+- The `player` field will automatically be polulated with the name of a player in the current game
 
 #### development
 
@@ -25,5 +24,3 @@ make run                # starts nginx server running in docker on port 80
 
 [localhost](http://localhost)
 
-##### TODO
-* add support for redux
