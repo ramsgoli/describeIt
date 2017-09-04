@@ -37,6 +37,7 @@ const START_GAME_SUCCESS = Symbol('START_GAME_SUCCESS')
 const START_GAME_FAILURE = Symbol('START_GAME_FAILURE')
 
 const SET_SOCKET_ID = Symbol('SET_SOCKET_ID')
+const SET_QUESTION = Symbol('SET_QUESTION')
 
 /*
 Actions
@@ -107,6 +108,13 @@ export const setSocketId = (id) => {
     return {
         type: SET_SOCKET_ID,
         id
+    }
+}
+
+export const setQuestion = (question) => {
+    return {
+        type: SET_QUESTION,
+        question
     }
 }
 
@@ -193,6 +201,7 @@ export const startGame = () => {
 
 const initialState = fromJS({
     accessCode: '',
+    question: "What is Harry's favorite dream?",
     socketId: '',
     gameState: NULL_STATE,
     _internal: {
@@ -241,6 +250,11 @@ export const Game = (state=initialState, action) => {
         case SET_SOCKET_ID: {
             return state.withMutations(val => {
                 val.set('socketId', action.id)
+            })
+        }
+        case SET_QUESTION: {
+            return state.withMutations(val => {
+                val.set('question', action.question)
             })
         }
         default:

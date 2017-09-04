@@ -21,13 +21,19 @@ module.exports = {
                     use: [
                         {loader: "css-loader",
                             options: {
-                                minimize: true,
                                 modules: true
                             }
                         },
                         {loader: "sass-loader"},
                     ]
                 })
+            },
+            {
+                test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+                loader: 'url-loader',
+                    options: {
+                        limit: 10000
+                    }
             }
         ]
     },

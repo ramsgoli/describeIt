@@ -6,7 +6,9 @@ import { Provider } from 'react-redux'
 
 import { store, history } from 'reducers'
 
-import 'index.scss'
+import 'bootstrap/dist/css/bootstrap.css'
+import './index.scss'
+
 import App from './containers/App'
 
 class Root extends React.Component {
