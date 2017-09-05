@@ -28,8 +28,14 @@
 }
 
 .submissionText {
-  margin-top: 20px;
   padding: 10px;
   width: 300px;
-  height: 200px;
+  height: 100px;
+  margin: 20px auto;
+  display: block;
+  font-size: 1.5em;
+  font-family: inherit;
+  font-weight: 300;
+  border-radius: 10px;
+  border: 0
 }
