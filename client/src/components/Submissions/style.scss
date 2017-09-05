@@ -7,9 +7,7 @@
   position: relative;
   display: inline-block;
   width: 100%;
-  text-align: center;
   background-color: $orange;
-
 }
 
 .questionContainer {
@@ -29,6 +27,9 @@
   }
 }
 
-.submissionInput {
+.submissionText {
+  margin-top: 20px;
+  padding: 10px;
   width: 300px;
+  height: 200px;
 }

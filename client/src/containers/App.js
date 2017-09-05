@@ -35,7 +35,8 @@ class App extends React.Component {
         return (
             <main>
                 <NotificationsSystem theme={theme}/>
-                {gameComponent}
+                <SubmissionsContainer/>
+                {/*gameComponent*/}
             </main>
         )
     }

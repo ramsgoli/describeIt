@@ -6,7 +6,6 @@ import { Provider } from 'react-redux'
 
 import { store, history } from 'reducers'
 
-import 'bootstrap/dist/css/bootstrap.css'
 import './index.scss'
 
 import App from './containers/App'
