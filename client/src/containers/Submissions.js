@@ -1,6 +1,8 @@
 import React from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import { currentPlayerActions } from '../reducers'
 import Submissions from '../components/Submissions'
 
 class SubmissionsContainer extends React.Component {
@@ -10,6 +12,7 @@ class SubmissionsContainer extends React.Component {
                 question={this.props.question}
                 players={this.props.players}
                 currentPlayer={this.props.currentPlayer}
+                addSubmission={this.props.addSubmission}
             />
         )
     }
@@ -28,4 +31,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(SubmissionsContainer)
+const mapDispatchToProps = dispatch => {
+    return {
+        addSubmission: bindActionCreators(currentPlayerActions.addSubmission, dispatch)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SubmissionsContainer)

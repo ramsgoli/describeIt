@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable'
-
+import Config from '../config'
 /*
 CONSTANTS
  */
@@ -19,16 +19,36 @@ export const setPlayerName = (name) => {
     }
 }
 
+/*
 export const addSubmission = (submission) => {
     return {
         type: ADD_SUBMISSION,
         submission
     }
 }
+*/
 
 /*
 REDUCERS
  */
+
+export const addSubmission = submission => (dispatch, getState) => {
+    const Game = getState().Game
+    const accessCode = Game.get('accessCode')
+    const socketId = Game.get('socketId')
+
+    fetch(`${Config.API_URL}/games/${accessCode}/submissions`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            accessCode,
+            socketId,
+            submission
+        })
+    })
+}
 
 const initialState = fromJS({
     name: '',

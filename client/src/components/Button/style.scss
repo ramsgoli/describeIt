@@ -34,3 +34,9 @@
 	}
 }
 
+.btnSuccessDisabled {
+	composes: btnSuccess;
+	cursor: not-allowed;
+
+}
+

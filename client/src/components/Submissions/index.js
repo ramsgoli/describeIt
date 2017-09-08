@@ -16,7 +16,10 @@ export default class extends React.Component {
     }
 
     _submit = () => {
-        console.log(this.state.answer)
+        this.setState({
+            submitted: true
+        })
+        this.props.addSubmission(this.state.answer)
     }
 
     render() {
@@ -33,7 +36,7 @@ export default class extends React.Component {
                     onChange={this.onChange}
                 />
                 <div className={css.btnContainer}>
-                    <Button onClick={this._submit}>Submit</Button>
+                    <Button onClick={this._submit} disabled={this.state.submitted}>Submit</Button>
                 </div>
                 <div className={css.table}>
                     <div className={css.row}>
