@@ -8,6 +8,8 @@ class SubmissionsContainer extends React.Component {
         return(
             <Submissions
                 question={this.props.question}
+                players={this.props.players}
+                currentPlayer={this.props.currentPlayer}
             />
         )
     }
@@ -15,10 +17,14 @@ class SubmissionsContainer extends React.Component {
 
 const mapStateToProps = state => {
     const Game = state.Game
+    const CurrentPlayer = state.CurrentPlayer
+    const Players = state.Players
 
     return {
         accessCode: Game.get('accessCode'),
-        question: Game.get('question'),
+        currentPlayer: CurrentPlayer,
+        players: Players.get('players'),
+        question: Game.get('question')
     }
 }
 

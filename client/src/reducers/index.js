@@ -4,7 +4,7 @@ import { createLogger } from 'redux-logger'
 
 import {reducer as notificationsReducer} from 'reapop'
 
-import { Game, createGame, joinGame, startGame, setSocketId, gameStates } from './Game'
+import { Game, createGame, joinGame, startGame, setSocketId, setGameState, gameStates } from './Game'
 import { setPlayerName, addSubmission, CurrentPlayer } from './CurrentPlayer'
 import { Players, addPlayer, removePlayer } from './Players'
 
@@ -22,7 +22,7 @@ const store = createStore(
 )
 
 const gameActions = {
-    createGame, joinGame, startGame, setSocketId
+    createGame, joinGame, startGame, setSocketId, setGameState
 }
 
 const currentPlayerActions = {

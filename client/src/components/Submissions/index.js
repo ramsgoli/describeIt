@@ -1,5 +1,5 @@
 import React from 'react'
-//import { Input, Button } from 'reactstrap'
+import Button from '../Button'
 
 import css from './style.scss'
 
@@ -15,7 +15,13 @@ export default class extends React.Component {
         })
     }
 
+    _submit = () => {
+        console.log(this.state.answer)
+    }
+
     render() {
+        const { currentPlayer } = this.props
+
         return(
             <div className={css.wrapper}>
                 <div className={css.questionContainer}>
@@ -25,7 +31,22 @@ export default class extends React.Component {
                     value={this.state.answer}
                     className={css.submissionText}
                     onChange={this.onChange}
-                    />
+                />
+                <div className={css.btnContainer}>
+                    <Button onClick={this._submit}>Submit</Button>
+                </div>
+                <div className={css.table}>
+                    <div className={css.row}>
+                        {`${currentPlayer.get('name')} *`}
+                    </div>
+                    {this.props.players.map(player => {
+                        return (
+                            <div className={css.row} key={player.get('id')}>
+                                {player.get('name')}
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
         )
     }

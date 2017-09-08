@@ -1,0 +1,21 @@
+@import '../../styles/vars';
+
+.table {
+    width: 250px;
+    height: 60%;
+    margin: 20px auto;
+    color: white;
+    text-align: left;
+    border: 3px solid $white;
+    overflow: scroll;
+}
+
+.row {
+    padding: 10px;
+    vertical-align: top;
+    white-space: nowrap;
+
+    &:nth-child(2n-1) {
+     background-color: $dark-blue;
+    }
+}

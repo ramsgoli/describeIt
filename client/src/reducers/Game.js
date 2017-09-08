@@ -39,6 +39,7 @@ const START_GAME_FAILURE = Symbol('START_GAME_FAILURE')
 const SET_SOCKET_ID = Symbol('SET_SOCKET_ID')
 const SET_QUESTION = Symbol('SET_QUESTION')
 
+const SET_GAME_STATE = Symbol('SET_GAME_STATE')
 /*
 Actions
  */
@@ -118,6 +119,13 @@ export const setQuestion = (question) => {
     }
 }
 
+export const setGameState = (state) => {
+    return {
+        type: SET_GAME_STATE,
+        state
+    }
+}
+
 export const joinGame = (name, accessCode) => {
     return (dispatch, getState) => {
         dispatch(setPlayerName(name))
@@ -185,7 +193,8 @@ export const startGame = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                accessCode: Game.get('accessCode')
+                accessCode: Game.get('accessCode'),
+                socketId: Game.get('socketId')
             })
         })
             .then(handleErrors)
@@ -255,6 +264,11 @@ export const Game = (state=initialState, action) => {
         case SET_QUESTION: {
             return state.withMutations(val => {
                 val.set('question', action.question)
+            })
+        }
+        case SET_GAME_STATE: {
+            return state.withMutations(val => {
+                val.set('gameState', action.state)
             })
         }
         default:
