@@ -36,7 +36,6 @@ const START_GAME_START = Symbol('START_GAME_START')
 const START_GAME_SUCCESS = Symbol('START_GAME_SUCCESS')
 const START_GAME_FAILURE = Symbol('START_GAME_FAILURE')
 
-const SET_SOCKET_ID = Symbol('SET_SOCKET_ID')
 const SET_QUESTION = Symbol('SET_QUESTION')
 
 const SET_GAME_STATE = Symbol('SET_GAME_STATE')
@@ -105,12 +104,6 @@ const startGameFailure = (error) => {
     }
 }
 
-export const setSocketId = (id) => {
-    return {
-        type: SET_SOCKET_ID,
-        id
-    }
-}
 
 export const setQuestion = (question) => {
     return {
@@ -130,7 +123,7 @@ export const joinGame = (name, accessCode) => {
     return (dispatch, getState) => {
         dispatch(setPlayerName(name))
 
-        const { Game } = getState()
+        const { CurrentPlayer } = getState()
 
         fetch(`${Config.API_URL}/users`, {
             method: 'POST',
@@ -140,7 +133,7 @@ export const joinGame = (name, accessCode) => {
             body: JSON.stringify({
                 name,
                 accessCode,
-                socketId: Game.get('socketId')
+                socketId: CurrentPlayer.get('socketId')
             })
         })
             .then(handleErrors)
@@ -159,7 +152,7 @@ export const createGame = (name) => {
     return (dispatch, getState) => {
         dispatch(setPlayerName(name))
 
-        const { Game } = getState()
+        const { CurrentPlayer } = getState()
 
         fetch(`${Config.API_URL}/users`, {
             method: 'POST',
@@ -168,7 +161,7 @@ export const createGame = (name) => {
             },
             body: JSON.stringify({
                 name,
-                socketId: Game.get('socketId')
+                socketId: CurrentPlayer.get('socketId')
             })
         })
             .then(handleErrors)
@@ -185,7 +178,7 @@ export const createGame = (name) => {
 export const startGame = () => {
     return (dispatch, getState) => {
 
-        const { Game } = getState()
+        const { Game, CurrentPlayer } = getState()
 
         fetch(`${Config.API_URL}/games`, {
             method: 'POST',
@@ -194,7 +187,7 @@ export const startGame = () => {
             },
             body: JSON.stringify({
                 accessCode: Game.get('accessCode'),
-                socketId: Game.get('socketId')
+                socketId: CurrentPlayer.get('socketId')
             })
         })
             .then(handleErrors)
@@ -211,7 +204,6 @@ export const startGame = () => {
 const initialState = fromJS({
     accessCode: '',
     question: "What is Harry's favorite dream?",
-    socketId: '',
     gameState: NULL_STATE,
     _internal: {
         loading: false,
@@ -254,11 +246,6 @@ export const Game = (state=initialState, action) => {
         case START_GAME_SUCCESS: {
             return state.withMutations(val => {
                 val.set('gameState', action.game.gameState)
-            })
-        }
-        case SET_SOCKET_ID: {
-            return state.withMutations(val => {
-                val.set('socketId', action.id)
             })
         }
         case SET_QUESTION: {

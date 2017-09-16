@@ -5,6 +5,7 @@ CONSTANTS
  */
 
 const SET_PLAYER_NAME = Symbol('SET_PLAYER_NAME')
+const SET_SOCKET_ID = Symbol('SET_SOCKET_ID')
 
 const ADD_SUBMISSION = Symbol('ADD_SUBMISSION')
 
@@ -19,25 +20,20 @@ export const setPlayerName = (name) => {
     }
 }
 
-/*
-export const addSubmission = (submission) => {
+export const setSocketId = (id) => {
     return {
-        type: ADD_SUBMISSION,
-        submission
+        type: SET_SOCKET_ID,
+        id
     }
 }
-*/
 
-/*
-REDUCERS
- */
 
 export const addSubmission = submission => (dispatch, getState) => {
     const Game = getState().Game
     const accessCode = Game.get('accessCode')
     const socketId = Game.get('socketId')
 
-    fetch(`${Config.API_URL}/games/${accessCode}/submissions`, {
+    fetch(`${Config.API_URL}/users/${accessCode}/submissions`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -50,7 +46,13 @@ export const addSubmission = submission => (dispatch, getState) => {
     })
 }
 
+/*
+ REDUCERS
+ */
+
 const initialState = fromJS({
+    id: null,
+    socketId: '',
     name: '',
     submissions: []
 })
@@ -58,6 +60,11 @@ const initialState = fromJS({
 
 export const CurrentPlayer = (state=initialState, action) => {
     switch (action.type) {
+        case SET_SOCKET_ID: {
+            return state.withMutations(val => {
+                 val.set('socketId', action.id)
+            })
+        }
         case SET_PLAYER_NAME: {
             return state.withMutations(val => {
                 val.set('name', action.name)

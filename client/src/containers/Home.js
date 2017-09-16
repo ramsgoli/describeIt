@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         createGame: bindActionCreators(gameActions.createGame, dispatch),
         joinGame: bindActionCreators(gameActions.joinGame, dispatch),
-        setSocketId: bindActionCreators(gameActions.setSocketId, dispatch)
+        setSocketId: bindActionCreators(currentPlayerActions.setSocketId, dispatch)
     }
 }
 

@@ -43,6 +43,24 @@ router.post('/', (req, res) => {
     })
 })
 
+router.post('/:accessCode/submissions', (req, res) => {
+    Game.findOne({
+        where: {
+            accessCode
+        }
+    }).then(game => {
+        if (!game) {
+            return res.status(404).json({error: 'Specified game was not found'})
+        }
+
+        if (game.getDataValue('gameState') !== 'VOTING_STATE') {
+            res.status(403).json({error: 'No submissions allowed'})
+        }
+
+
+    })
+})
+
 router.get('/', (req, res) => {
     Game.findAll().then(games => {
         return res.json({games: games})
