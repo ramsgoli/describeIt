@@ -9,10 +9,14 @@ module.exports = (db, Sequelize) => {
         text: {
             type: Sequelize.TEXT,
         },
-        userID: {
-            type: Sequelize.INTEGER,
-        }
     })
 
+    /* Instance Level Methods */
+    Submission.prototype.public = function() {
+        return {
+            id: this.id,
+            text: this.text
+        }
+    }
     return Submission
 }

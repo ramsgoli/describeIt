@@ -2,7 +2,7 @@ const express = require('express')
 const randomstring = require('randomstring')
 
 let router = express.Router()
-const { User, Game } = require('../../db')
+const { User, Game, Submission } = require('../../db')
 
 /**
  * BODY: accessCode (optional)
@@ -79,11 +79,37 @@ router.post('/', (req, res) => {
                 socketId
             }).then(user => {
                 user.setGame(game)
-                res.json({accessCode})
+                return res.json({
+                    accessCode,
+                    user: user.public()
+                })
             })
         })
     }
-
 })
+
+router.post('/:id/submissions', (req, res) => {
+    const submission = req.body.submission
+
+    User.findOne({
+       where: {
+           id: req.params.id
+       }
+    }).then(user => {
+        if (!user) {
+            return res.status(404).json({error: 'No user found'})
+        }
+
+        Submission.create({
+            text: submission
+        }).then(submission => {
+            submission.setUser(user)
+            return res.json({
+                submission: submission.public()
+            })
+        })
+    })
+})
+
 
 module.exports = router

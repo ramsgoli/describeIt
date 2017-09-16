@@ -1,10 +1,12 @@
 import { fromJS } from 'immutable'
 import Config from '../config'
+import handleErrors from './Errors'
 /*
 CONSTANTS
  */
 
 const SET_PLAYER_NAME = Symbol('SET_PLAYER_NAME')
+const SET_PLAYER_ID = Symbol('SET_PLAYER_ID')
 const SET_SOCKET_ID = Symbol('SET_SOCKET_ID')
 
 const ADD_SUBMISSION = Symbol('ADD_SUBMISSION')
@@ -27,23 +29,31 @@ export const setSocketId = (id) => {
     }
 }
 
+export const setPlayerId = (id) => {
+    return {
+        type: SET_PLAYER_ID,
+        id
+    }
+}
+
 
 export const addSubmission = submission => (dispatch, getState) => {
-    const Game = getState().Game
-    const accessCode = Game.get('accessCode')
-    const socketId = Game.get('socketId')
+    const { CurrentPlayer } = getState()
 
-    fetch(`${Config.API_URL}/users/${accessCode}/submissions`, {
+    const playerId = CurrentPlayer.get('id')
+
+    fetch(`${Config.API_URL}/users/${playerId}/submissions`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            accessCode,
-            socketId,
             submission
         })
     })
+        .then(handleErrors)
+        .then(res => res.json())
+        .then(res => console.log(res))
 }
 
 /*
@@ -60,6 +70,11 @@ const initialState = fromJS({
 
 export const CurrentPlayer = (state=initialState, action) => {
     switch (action.type) {
+        case SET_PLAYER_ID: {
+            return state.withMutations(val => {
+                val.set('id', action.id)
+            })
+        }
         case SET_SOCKET_ID: {
             return state.withMutations(val => {
                  val.set('socketId', action.id)

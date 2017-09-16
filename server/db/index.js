@@ -29,6 +29,7 @@ const Question = require('./models/Question')(db, Sequelize)
 
 // Define associations
 User.belongsTo(Game) // User has a gameId attribute
+Submission.belongsTo(User) // Submission has a userId attribute
 Question.hasOne(Game) // Game has a questionId attribute
 
 db.sync()

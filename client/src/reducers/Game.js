@@ -4,7 +4,7 @@ import { addNotification as notify } from 'reapop'
 
 import Config from '../config'
 
-import { setPlayerName } from './CurrentPlayer'
+import { setPlayerName, setPlayerId } from './CurrentPlayer'
 import { setPlayers } from './Players'
 
 /*
@@ -168,6 +168,7 @@ export const createGame = (name) => {
             .then(resp => resp.json())
             .then(resp => {
                 dispatch(createGameSuccess(resp.accessCode))
+                dispatch(setPlayerId(resp.user.id))
             })
             .catch(error => {
                 dispatch(createGameFailure(error.response))
