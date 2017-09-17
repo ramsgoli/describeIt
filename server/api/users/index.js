@@ -74,11 +74,13 @@ router.post('/', (req, res) => {
         Game.create({
             accessCode
         }).then(game => {
+
             User.create({
                 name: userName,
                 socketId
             }).then(user => {
                 user.setGame(game)
+
                 return res.json({
                     accessCode,
                     user: user.public()
@@ -90,6 +92,9 @@ router.post('/', (req, res) => {
 
 router.post('/:id/submissions', (req, res) => {
     const submission = req.body.submission
+    if (!submission) {
+        return res.status(403).json({error: 'No submission provided'})
+    }
 
     User.findOne({
        where: {
@@ -104,6 +109,7 @@ router.post('/:id/submissions', (req, res) => {
             text: submission
         }).then(submission => {
             submission.setUser(user)
+
             return res.json({
                 submission: submission.public()
             })

@@ -22,6 +22,14 @@ export default class extends React.Component {
         this.props.addSubmission(this.state.answer)
     }
 
+    _renderCheck = () => {
+        return (
+            <div className={css.checkWrapper}>
+                <i className="fa fa-check"></i>
+            </div>
+        )
+    }
+
     render() {
         const { currentPlayer } = this.props
 
@@ -41,6 +49,7 @@ export default class extends React.Component {
                 <div className={css.table}>
                     <div className={css.row}>
                         {`${currentPlayer.get('name')} *`}
+                        {this.state.submitted ? this._renderCheck() : null}
                     </div>
                     {this.props.players.map(player => {
                         return (
