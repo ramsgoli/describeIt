@@ -25,9 +25,9 @@ const mapStateToProps = state => {
 
     return {
         accessCode: Game.get('accessCode'),
+        question: Game.get('question'),
         currentPlayer: CurrentPlayer,
         players: Players.get('players'),
-        question: Game.get('question')
     }
 }
 

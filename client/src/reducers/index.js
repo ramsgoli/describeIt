@@ -6,7 +6,7 @@ import {reducer as notificationsReducer} from 'reapop'
 
 import { Game, createGame, joinGame, startGame,  setGameState, gameStates } from './Game'
 import { setPlayerName, setSocketId, addSubmission, CurrentPlayer } from './CurrentPlayer'
-import { Players, addPlayer, removePlayer } from './Players'
+import { Players, addPlayer, removePlayer, addPlayerSubmission } from './Players'
 
 const store = createStore(
     combineReducers({
@@ -30,7 +30,7 @@ const currentPlayerActions = {
 }
 
 const playerActions = {
-    addPlayer, removePlayer
+    addPlayer, removePlayer, addPlayerSubmission
 }
 
 export {store,

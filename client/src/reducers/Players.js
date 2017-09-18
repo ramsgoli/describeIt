@@ -5,6 +5,7 @@ CONSTANTS
  */
 const ADD_PLAYER = Symbol('ADD_PLAYER')
 const REMOVE_PLAYER = Symbol('REMOVE_PLAYER')
+const ADD_SUBMISSION = Symbol('ADD_SUBMISSION')
 
 const SET_PLAYERS = Symbol('SET_PLAYERS')
 
@@ -34,6 +35,13 @@ export const removePlayer = (player) => {
     }
 }
 
+export const addPlayerSubmission = (submission) => {
+    return {
+        type: ADD_SUBMISSION,
+        submission
+    }
+}
+
 
 /*
 REDUCERS
@@ -43,7 +51,8 @@ REDUCERS
 /*
 player: {
     name: '',
-    submissions: []
+    id: null,
+    submission: ''
 }
  */
 
@@ -68,6 +77,12 @@ export const Players = (state=initialState, action) => {
         case REMOVE_PLAYER: {
             return state.withMutations(val => {
                val.set('players', val.get('players').filter(player => player.get('id') !== action.player.id))
+            })
+        }
+        case ADD_SUBMISSION: {
+            return state.withMutations(val => {
+                const idx = val.get('players').findIndex(player => player.get('id') === action.submission.id)
+                val.set('players', val.get('players').setIn(['idx', 'submission'], action.submission.text))
             })
         }
         default:

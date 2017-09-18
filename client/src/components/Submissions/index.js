@@ -5,7 +5,6 @@ import css from './style.scss'
 
 export default class extends React.Component {
     state = {
-        submitted: false,
         answer: ''
     }
 
@@ -32,6 +31,7 @@ export default class extends React.Component {
 
     render() {
         const { currentPlayer } = this.props
+        const submission = currentPlayer.get('submission')
 
         return(
             <div className={css.wrapper}>
@@ -49,12 +49,13 @@ export default class extends React.Component {
                 <div className={css.table}>
                     <div className={css.row}>
                         {`${currentPlayer.get('name')} *`}
-                        {this.state.submitted ? this._renderCheck() : null}
+                        {submission ? this._renderCheck() : null}
                     </div>
                     {this.props.players.map(player => {
                         return (
                             <div className={css.row} key={player.get('id')}>
                                 {player.get('name')}
+                                {player.get('submission') ? this._renderCheck() : null}
                             </div>
                         )
                     })}

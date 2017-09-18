@@ -36,6 +36,13 @@ export const setPlayerId = (id) => {
     }
 }
 
+const setSubmission = (submission) => {
+    return {
+        type: ADD_SUBMISSION,
+        submission
+    }
+}
+
 
 export const addSubmission = submission => (dispatch, getState) => {
     const { CurrentPlayer } = getState()
@@ -53,7 +60,9 @@ export const addSubmission = submission => (dispatch, getState) => {
     })
         .then(handleErrors)
         .then(res => res.json())
-        .then(res => console.log(res))
+        .then(res => {
+            dispatch(setSubmission(res.submission))
+        })
 }
 
 /*
@@ -64,7 +73,7 @@ const initialState = fromJS({
     id: null,
     socketId: '',
     name: '',
-    submissions: []
+    submission: null
 })
 
 
@@ -88,7 +97,7 @@ export const CurrentPlayer = (state=initialState, action) => {
 
         case ADD_SUBMISSION: {
             return state.withMutations(val => {
-                val.set('submissions', val.get('submissions').push(action.submission))
+                val.set('submission', action.submission)
             })
         }
 
