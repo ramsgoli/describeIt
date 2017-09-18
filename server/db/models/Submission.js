@@ -15,7 +15,8 @@ module.exports = (db, Sequelize) => {
     Submission.prototype.public = function() {
         return {
             id: this.id,
-            text: this.text
+            text: this.text,
+            userId: this.userId
         }
     }
     return Submission

@@ -52,11 +52,12 @@ router.post('/', (req, res) => {
                 socket.broadcast.to(accessCode).emit('newPlayer', user.toJSON())
 
                 //get all other players in this game
-                return user.getOtherPlayers()
-            }).then(players => {
-                return res.json({
-                    accessCode,
-                    players: players.map(player => player.public())
+                user.getOtherPlayers().then(players => {
+                    return res.json({
+                        accessCode,
+                        players: players.map(player => player.public()),
+                        currentPlayer: user.public()
+                    })
                 })
             })
         })
@@ -83,7 +84,7 @@ router.post('/', (req, res) => {
 
                 return res.json({
                     accessCode,
-                    user: user.public()
+                    currentPlayer: user.public()
                 })
             })
         })
@@ -92,23 +93,30 @@ router.post('/', (req, res) => {
 
 router.post('/:id/submissions', (req, res) => {
     const submission = req.body.submission
+
+    const sockets = req.io.sockets.connected
     if (!submission) {
         return res.status(403).json({error: 'No submission provided'})
     }
 
     User.findOne({
-       where: {
+        where: {
            id: req.params.id
-       }
+        },
+        include: [Game]
     }).then(user => {
         if (!user) {
             return res.status(404).json({error: 'No user found'})
         }
 
+        const socket = sockets[user.socketId]
+
         Submission.create({
             text: submission
         }).then(submission => {
             submission.setUser(user)
+
+            socket.broadcast.to(user.game.accessCode).emit('newSubmission', submission.public())
 
             return res.json({
                 submission: submission.public()

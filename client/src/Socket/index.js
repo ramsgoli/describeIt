@@ -9,6 +9,7 @@ class SocketManager {
         this.socket.on('newPlayer', this.onNewPlayer)
         this.socket.on('removePlayer', this.removePlayer)
         this.socket.on('setGameState', this.setGameState)
+        this.socket.on('newSubmission', this.onNewSubmission)
     }
 
     emit = (event, data) => {
@@ -25,6 +26,10 @@ class SocketManager {
 
     setGameState = (state) => {
         store.dispatch(gameActions.setGameState(state))
+    }
+
+    onNewSubmission = (submission) => {
+        store.dispatch(playerActions.addPlayerSubmission(submission))
     }
 }
 

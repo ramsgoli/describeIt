@@ -140,6 +140,7 @@ export const joinGame = (name, accessCode) => {
             .then(resp => resp.json())
             .then(resp => {
                 dispatch(setPlayers(resp.players))
+                dispatch(setPlayerId(resp.currentPlayer.id))
                 dispatch(joinGameSuccess(resp.accessCode))
             })
             .catch(error => {
@@ -168,7 +169,7 @@ export const createGame = (name) => {
             .then(resp => resp.json())
             .then(resp => {
                 dispatch(createGameSuccess(resp.accessCode))
-                dispatch(setPlayerId(resp.user.id))
+                dispatch(setPlayerId(resp.currentPlayer.id))
             })
             .catch(error => {
                 dispatch(createGameFailure(error.response))
