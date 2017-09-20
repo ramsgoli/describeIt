@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
             return res.status(404).json({error: 'Specified game was not found'})
         }
 
-        if (game.getDataValue('gameState') === 'SUBMISSIONS_STATE') {
+        if (game.getDataValue('gameState') !== 'LOBBY_STATE') {
             // game has already begun
             res.status(403).json({eror: 'Specified game has alredy begun'})
         }

@@ -1,5 +1,6 @@
 const express = require('express')
 const randomstring = require('randomstring')
+const { hasEveryoneSubmitted } = require('../utils')
 
 let router = express.Router()
 const { User, Game, Submission } = require('../../db')
@@ -109,6 +110,8 @@ router.post('/:id/submissions', (req, res) => {
             return res.status(404).json({error: 'No user found'})
         }
 
+        const game = user.game
+
         const socket = sockets[user.socketId]
 
         Submission.create({
@@ -116,10 +119,19 @@ router.post('/:id/submissions', (req, res) => {
         }).then(submission => {
             submission.setUser(user)
 
-            socket.broadcast.to(user.game.accessCode).emit('newSubmission', submission.public())
+            socket.broadcast.to(game.accessCode).emit('newSubmission', submission.public())
 
-            return res.json({
+            res.json({
                 submission: submission.public()
+            })
+
+            // check if everyone has submitted an answer for this game
+            hasEveryoneSubmitted(game).then(ok => {
+                console.log(ok)
+                if (ok) {
+                    game.acceptVotes()
+                    req.io.to(game.accessCode).emit('setGameState', game.getDataValue('gameState'))
+                }
             })
         })
     })

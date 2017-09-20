@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import Home from './Home'
 import Lobby from './Lobby'
 import SubmissionsContainer from './Submissions'
+import VotingContainer from './Voting'
 import { gameStates } from '../reducers/index'
 
 class App extends React.Component {
@@ -25,6 +26,10 @@ class App extends React.Component {
             }
             case gameStates.SUBMISSIONS_STATE: {
                 gameComponent = <SubmissionsContainer />
+                break
+            }
+            case gameStates.VOTING_STATE: {
+                gameComponent = <VotingContainer />
                 break
             }
             default: {
@@ -45,12 +50,6 @@ const mapStateToProps = (state) => {
     const Game = state.Game
     return {
         gameState: Game.get('gameState')
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-
     }
 }
 
