@@ -58,7 +58,14 @@ player: {
 
 const initialState = fromJS({
     players: [
-
+        {
+            id: 1,
+            name: 'Bob Smith'
+        },
+        {
+            id: 2,
+            name: 'Tom Brady'
+        }
     ]
 })
 
@@ -71,7 +78,7 @@ export const Players = (state=initialState, action) => {
         }
         case SET_PLAYERS: {
             return state.withMutations(val => {
-                val.set('players', fromJS(fromJS(action.players)))
+                val.set('players', fromJS(action.players))
             })
         }
         case REMOVE_PLAYER: {

@@ -18,12 +18,10 @@ const hasEveryoneSubmitted = (game) => {
                 }).then(submission => {
                     // if there is no submission for this user, return false
                     if (!submission) {
-                        console.log('should be here!')
                         return resolve(false)
                     }
                     if (idx === players.length - 1) {
                         // we have encountered a submission for each player. Resolve with true
-                        console.log('should not be here')
                         resolve(true)
                     }
                 })

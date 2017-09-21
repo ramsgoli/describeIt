@@ -204,9 +204,9 @@ export const startGame = () => {
 }
 
 const initialState = fromJS({
-    accessCode: '',
+    accessCode: 'abcde',
     question: "What is Harry's favorite dream?",
-    gameState: NULL_STATE,
+    gameState: VOTING_STATE,
     _internal: {
         loading: false,
         errors: []
