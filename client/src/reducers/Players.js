@@ -57,16 +57,7 @@ player: {
  */
 
 const initialState = fromJS({
-    players: [
-        {
-            id: 1,
-            name: 'Bob Smith'
-        },
-        {
-            id: 2,
-            name: 'Tom Brady'
-        }
-    ]
+    players: []
 })
 
 export const Players = (state=initialState, action) => {

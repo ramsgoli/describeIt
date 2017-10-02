@@ -70,10 +70,10 @@ export const addSubmission = submission => (dispatch, getState) => {
  */
 
 const initialState = fromJS({
-    id: 1,
-    socketId: 'askjfalskjflkadsf',
-    name: 'Ram Goli',
-    submission: 'Foo Bar!'
+    id: null,
+    socketId: '',
+    name: '',
+    submissions: []
 })
 
 
