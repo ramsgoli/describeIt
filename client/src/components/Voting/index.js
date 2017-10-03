@@ -1,23 +1,23 @@
 import React from 'react'
 import css from './style.scss'
 
-import Quote from '../Quote'
 import SubmissionContainer from './submissionContainer'
 
-export default class extends React.Component {
+class Voting extends React.Component {
     render() {
         return(
             <div className={css.wrapper}>
                 <div className={css.instructions}>
                     Select who you think each submission belongs to
                 </div>
-                {this.props.submissions.map(submission => {
+                {this.props.players.map(player => {
                     return(
-                        <SubmissionContainer submission={submission}/>
+                        <SubmissionContainer key={player.get('id')} submission={player.get('submission')}/>
                     )
                 })}
-                <Quote />
             </div>
         )
     }
 }
+
+export default Voting

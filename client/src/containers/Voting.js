@@ -7,18 +7,16 @@ class VotingContainer extends React.Component {
     render() {
         return (
             <Voting
-                playerNames={this.props.playerNames}
-                submissions={this.props.submissions}
+                players={this.props.players}
             />
         )
     }
 }
 
 const mapStateToProps = state => {
-    const players = state.Players
+    const players = state.Players.get('players')
     return {
-        playerNames: players.map(player => player.get('name')),
-        submissions: players.map(player => player.get('submission'))
+        players: players
     }
 }
 
