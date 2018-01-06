@@ -1,14 +1,18 @@
-import 'whatwg-fetch'
+import 'whatwg-fetch';
+import 'babel-polyfill';
 
 import React from 'react';
 import { render } from 'react-dom';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 
-import { store, history } from 'reducers'
+import { store, history } from './reducers';
 
-import './index.scss'
+import './index.scss';
+import App from './containers/App';
 
-import App from './containers/App'
+if (module.hot) {
+    module.hot.accept();
+}
 
 class Root extends React.Component {
     render() {
@@ -23,4 +27,4 @@ class Root extends React.Component {
 render(
     <Root />,
     document.getElementById('root')
-)
+);
