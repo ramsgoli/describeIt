@@ -66,7 +66,7 @@ const initialState = fromJS({
         {
             name: 'Nityan',
             id: 'alskdjfasdf',
-            submission: 'Hello world you beauty!'
+            submission: 'Hello world you beauty!alksdflkasjdf  alskdfj lsakdj flskadj flskdaj fsladkf jsdalkfj salkdjf salkdfj sdlkfj sadklfjsdalkj '
         }
     ]
 })

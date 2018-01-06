@@ -1,5 +1,6 @@
 @import '../../styles/vars';
 
+
 .wrapper {
   height: 100vh;
   min-height: 100%;
@@ -26,8 +27,10 @@
   display: flex;
   width: 80%;
   margin: 10px auto;
+  color: white;
 }
 
 .submissionText {
   display: flex;
+  margin-left: 20px;
 }

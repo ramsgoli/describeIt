@@ -43,25 +43,25 @@ router.post('/', (req, res) => {
             socket.join(accessCode)
 
             // Create a new user
-            User.create({
+            return User.create({
                 name: userName,
                 socketId
-            }).then(user => {
-                user.setGame(game)
-
-                // let all other sockets know that a new player has joined
-                socket.broadcast.to(accessCode).emit('newPlayer', user.toJSON())
-
-                //get all other players in this game
-                user.getOtherPlayers().then(players => {
-                    return res.json({
-                        accessCode,
-                        players: players.map(player => player.public()),
-                        currentPlayer: user.public()
-                    })
-                })
             })
-        })
+        }.then(user => {
+            user.setGame(game)
+
+            // let all other sockets know that a new player has joined
+            socket.broadcast.to(accessCode).emit('newPlayer', user.toJSON())
+
+            //get all other players in this game
+            return user.getOtherPlayers()
+        }.then(players => {
+            return res.json({
+                accessCode,
+                players: players.map(player => player.public()),
+                currentPlayer: user.public()
+            })
+        });
     } else {
         // User wants to create a new game. Generate an access code
         accessCode = randomstring.generate({
