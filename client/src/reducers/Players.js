@@ -57,18 +57,7 @@ player: {
  */
 
 const initialState = fromJS({
-    players: [
-        {
-            name: 'Lawrence',
-            id: 'alskdjfasdlf',
-            submission: 'Jack daniels'
-        },
-        {
-            name: 'Nityan',
-            id: 'alskdjfasdf',
-            submission: 'Hello world you beauty!alksdflkasjdf  alskdfj lsakdj flskadj flskdaj fsladkf jsdalkfj salkdjf salkdfj sdlkfj sadklfjsdalkj '
-        }
-    ]
+    players: []
 })
 
 export const Players = (state=initialState, action) => {

@@ -26,15 +26,18 @@ router.post('/', (req, res) => {
     if (req.body.accessCode) {
         // User wants to join an existing game
         accessCode = req.body.accessCode
+        let game
+        let user
 
         Game.findOne({
             where: {
                 accessCode
             }
-        }).then(game => {
-            if (!game) {
+        }).then(possibleGame => {
+            if (!possibleGame) {
                 return res.status(404).json({error: 'No game found'})
             }
+            game = possibleGame
 
             if (game.getDataValue('gameState') === 'SUBMISSIONS_STATE') {
                 // can't join game that has already begun
@@ -49,7 +52,8 @@ router.post('/', (req, res) => {
                 name: userName,
                 socketId
             })
-        }).then(user => {
+        }).then(dbUser => {
+            user = dbUser
             user.setGame(game)
 
             // let all other sockets know that a new player has joined
