@@ -1,5 +1,4 @@
 import React from 'react'
-import css from './style.scss'
 
 class Button extends React.Component {
 
@@ -12,10 +11,10 @@ class Button extends React.Component {
          * primary:
          */
 
-        const className = this.props.disabled ? css.btnSuccessDisabled : css.btnSuccess
+        const className = this.props.disabled ? "success disabled" : "success"
 
         return(
-            <button className={className}
+            <button className={`btn ${className}`}
                 onClick={this._onClick}
             >
                 {this.props.children}

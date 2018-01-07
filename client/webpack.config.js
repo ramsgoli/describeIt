@@ -4,10 +4,12 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
-  entry: 'index.js',
+  entry: {
+    main: ['index.js',]
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'build/bundle.js',
+    filename: 'build/[name].js',
   },
   devtool: 'eval-source-map',
   module: {
@@ -36,7 +38,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('build/bundle.css'),
+    new ExtractTextPlugin('build/[name].css'),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),

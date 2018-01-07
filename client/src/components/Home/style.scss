@@ -1,36 +1,36 @@
 @import '../../styles/vars';
 
-.wrapper {
+.home-wrapper {
     background-color: $green;
     position: absolute;
     height: 100%;
     width: 100%;
-}
 
-.main {
-    margin-top: 200px;
-    text-align: center;
+    .main {
+        margin-top: 200px;
+        text-align: center;
 
-    h1 {
-        font-size: 4em;
-        font-weight: 400;
-        color: white;
-    }
-}
+        h1 {
+            font-size: 4em;
+            font-weight: 400;
+            color: white;
+        }
 
-.createGameField {
-    height: 50px;
+        .create-game-field {
+            height: 50px;
 
-    input {
-        padding: 6px;
-        margin-top: 5px;
-    }
-}
+            input {
+                padding: 6px;
+                margin-top: 5px;
+            }
+        }
 
-.joinGameField {
-    height: 50px;
+        .join-game-field {
+            height: 50px;
 
-    input {
-        padding: 6px;
+            input {
+                padding: 6px;
+            }
+        }
     }
 }

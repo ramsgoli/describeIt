@@ -205,7 +205,7 @@ export const startGame = () => {
 
 const initialState = fromJS({
     question: "What is Harry's favorite dream?",
-    gameState: VOTING_STATE,
+    gameState: NULL_STATE,
     _internal: {
         loading: false,
         errors: []

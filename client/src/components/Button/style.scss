@@ -18,8 +18,7 @@
 	outline: 0;
 }
 
-.btnSuccess {
-	composes: btn;
+.success {
 	background: #6BE886;
 	box-shadow: 0 6px #158D2F;
 
@@ -34,8 +33,7 @@
 	}
 }
 
-.btnSuccessDisabled {
-	composes: btnSuccess;
+.disabled {
 	cursor: not-allowed;
 }
 

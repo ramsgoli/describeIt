@@ -1,6 +1,5 @@
 import React from 'react'
 
-import css from './style.scss'
 import Button from '../../components/Button'
 
 
@@ -49,7 +48,7 @@ class Home extends React.Component {
 
     render() {
         let content =
-            <div className={css.btnContainer}>
+            <div className="btn-container">
                 <div>
                     <Button onClick={() => this.setMode('create')}>Create Game</Button>
                     <Button onClick={() => this.setMode('join')}>Join Game</Button>
@@ -59,7 +58,7 @@ class Home extends React.Component {
         if (this.state.mode === 'create') {
             content =
                 <section>
-                    <form className={css.createGameField} onChange={this.handleChange} onSubmit={e => e.preventDefault()}>
+                    <form className="create-game-field" onChange={this.handleChange} onSubmit={e => e.preventDefault()}>
                         <input
                             name="name"
                             type="text"
@@ -75,7 +74,7 @@ class Home extends React.Component {
         if (this.state.mode === 'join') {
             content =
                 <section>
-                    <form className={css.joinGameField} onChange={this.handleChange}>
+                    <form className="join-game-field" onChange={this.handleChange}>
                         <input
                             name="name"
                             type="text"
@@ -95,8 +94,8 @@ class Home extends React.Component {
         }
 
         return(
-            <div className={css.wrapper}>
-                <div className={css.main}>
+            <div className="home-wrapper">
+                <div className="main">
                     <h1>DescribeIt</h1>
                     {content}
                 </div>

@@ -15,6 +15,8 @@ const { User, Game, Submission } = require('../../db')
 router.post('/', (req, res) => {
     const userName = req.body.name
     const socketId = req.body.socketId
+    
+    console.log('here')
 
     //try to get the socket from the socketid
     const socket = req.io.sockets.connected[socketId]
@@ -47,7 +49,7 @@ router.post('/', (req, res) => {
                 name: userName,
                 socketId
             })
-        }.then(user => {
+        }).then(user => {
             user.setGame(game)
 
             // let all other sockets know that a new player has joined
@@ -55,7 +57,7 @@ router.post('/', (req, res) => {
 
             //get all other players in this game
             return user.getOtherPlayers()
-        }.then(players => {
+        }).then(players => {
             return res.json({
                 accessCode,
                 players: players.map(player => player.public()),
