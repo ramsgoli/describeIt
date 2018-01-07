@@ -23,7 +23,7 @@ export default class extends React.Component {
 
     _renderCheck = () => {
         return (
-            <div className={css.checkWrapper}>
+            <div className="check">
                 <i className="fa fa-check"></i>
             </div>
         )
@@ -34,26 +34,26 @@ export default class extends React.Component {
         const submission = currentPlayer.get('submission')
 
         return(
-            <div className={css.wrapper}>
-                <div className={css.questionContainer}>
+            <div className="submissions-container">
+                <div className="question-container">
                     <h1>{this.props.question}</h1>
                 </div>
                 <textarea
                     value={this.state.answer}
-                    className={css.submissionText}
+                    className="submission-text"
                     onChange={this.onChange}
                 />
-                <div className={css.btnContainer}>
+                <div className="btn-container">
                     <Button onClick={this._submit} disabled={this.state.submitted}>Submit</Button>
                 </div>
-                <div className={css.table}>
-                    <div className={css.row}>
+                <div className="table">
+                    <div className="row">
                         {`${currentPlayer.get('name')} *`}
                         {submission ? this._renderCheck() : null}
                     </div>
                     {this.props.players.map(player => {
                         return (
-                            <div className={css.row} key={player.get('id')}>
+                            <div className="row" key={player.get('id')}>
                                 {player.get('name')}
                                 {player.get('submission') ? this._renderCheck() : null}
                             </div>
