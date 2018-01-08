@@ -126,12 +126,10 @@ router.post('/:id/submissions', (req, res) => {
             socket.broadcast.to(game.accessCode).emit('newSubmission', submission.public())
 
             // check if everyone has submitted an answer for this game
-            hasEveryoneSubmitted(game).then(yes => {
-                if (yes) {
-                    game.acceptVotes()
-                    req.io.to(game.accessCode).emit('setGameState', game.getDataValue('gameState'))
-                }
-            })
+            if (hasEveryoneSubmitted()) {
+                game.acceptVotes()
+                req.io.to(game.accessCode).emit('setGameState', game.getDataValue('gameState'))
+            }
 
             res.json({
                 submission: submission.public()
