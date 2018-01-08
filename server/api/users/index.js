@@ -16,8 +16,6 @@ router.post('/', (req, res) => {
     const userName = req.body.name
     const socketId = req.body.socketId
     
-    console.log('here')
-
     //try to get the socket from the socketid
     const socket = req.io.sockets.connected[socketId]
 

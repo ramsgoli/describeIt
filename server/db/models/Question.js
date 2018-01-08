@@ -1,3 +1,5 @@
+const questions = require('../questions.json');
+
 module.exports = (db, Sequelize) => {
     const Question = db.define('question', {
         id: {
@@ -9,6 +11,13 @@ module.exports = (db, Sequelize) => {
             type: Sequelize.TEXT
         }
     })
+
+    // initialize all questions
+    for (let i = 0; i < questions.length; i++) {
+        Question.create({
+            text: questions[i]
+        });
+    }
 
     return Question
 }
