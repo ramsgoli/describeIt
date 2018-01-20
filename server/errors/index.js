@@ -12,6 +12,18 @@ class BadRequest extends HttpError {
     }
 }
 
+class Forbidden extends HttpError {
+    constructor(message) {
+        super(403, message || "Forbidden");
+    }
+}
+
+class InternalError extends HttpError {
+    constructor(message) {
+        super(500, message || "Internal Error");
+    }
+}
+
 const errorHandler = (err, req, res, next) => {
     return res.status(err.status).json({
         message: err.message
@@ -19,5 +31,5 @@ const errorHandler = (err, req, res, next) => {
 }
 
 module.exports = {
-    BadRequest, errorHandler
+    BadRequest, Forbidden, InternalError, errorHandler
 }

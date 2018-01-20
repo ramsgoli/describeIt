@@ -1,9 +1,11 @@
 const express = require('express')
 const randomstring = require('randomstring')
-const { hasEveryoneSubmitted } = require('../utils')
+
+const { hasEveryoneSubmitted } = require('../utils');
+const errors = require('../../errors');
+const { User, Game, Submission } = require('../../db');
 
 let router = express.Router()
-const { User, Game, Submission } = require('../../db')
 
 /**
  * BODY: accessCode (optional)
@@ -12,60 +14,62 @@ const { User, Game, Submission } = require('../../db')
  * If body does NOT contain accessCode, create new User AND Game
  * FIRST create game, THEN create user
  */
-router.post('/', (req, res) => {
+router.post('/', async (req, res, next) => {
     const userName = req.body.name
     const socketId = req.body.socketId
     
     //try to get the socket from the socketid
     const socket = req.io.sockets.connected[socketId]
+    if (!socket) {
+        return next(new BadRequest("Socket ID was not matched"));
+    }
 
     let accessCode
 
     if (req.body.accessCode) {
         // User wants to join an existing game
         accessCode = req.body.accessCode
-        let game
-        let user
 
-        Game.findOne({
-            where: {
-                accessCode
+        try {
+            const game = await Game.findOne({
+                where: {
+                    accessCode
+                }
+            });
+            if (!game) {
+                return next(new errors.BadRequest("Game does not exist"));
             }
-        }).then(possibleGame => {
-            if (!possibleGame) {
-                return res.status(404).json({error: 'No game found'})
-            }
-            game = possibleGame
 
             if (game.getDataValue('gameState') === 'SUBMISSIONS_STATE') {
                 // can't join game that has already begun
-                return res.status(403).json({error: 'The specified game has already begun'})
+                return next(new errors.Forbidden("Game has already begin"));
             }
 
             // Add socket to the room by accessCode
             socket.join(accessCode)
 
             // Create a new user
-            return User.create({
+            const newUser = await User.create({
                 name: userName,
                 socketId
             })
-        }).then(dbUser => {
-            user = dbUser
-            user.setGame(game)
+
+            newUser.setGame(game);
 
             // let all other sockets know that a new player has joined
-            socket.broadcast.to(accessCode).emit('newPlayer', user.toJSON())
+            socket.broadcast.to(accessCode).emit('newPlayer', newUser.toJSON())
 
-            //get all other players in this game
-            return user.getOtherPlayers()
-        }).then(players => {
+            // get all other users in this game
+            const otherPlayers = await newUser.getOtherPlayers()
+
             return res.json({
                 accessCode,
-                players: players.map(player => player.public()),
-                currentPlayer: user.public()
+                players: otherPlayers.map(player => player.public()),
+                currentPlayer: newUser.public()
             })
-        });
+        } catch (e) {
+            return next(new errors.InternalError());
+        }
     } else {
         // User wants to create a new game. Generate an access code
         accessCode = randomstring.generate({
