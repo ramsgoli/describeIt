@@ -11,6 +11,7 @@ const bodyParser = require('body-parser')
 
 const api = require('./api')
 const db = require('./db')
+const errors = require('./errors')
 
 /*
 midddlewares
@@ -26,13 +27,9 @@ app.use(bodyParser.json())
 app.use(cors())
 app.use(morgan('tiny')) // logging
 
+app.use('/api', api);
 
-app.get('/', (req, res) => {
-    res.send('Hello World from Docker!')
-})
-
-app.use('/api', api)
-
+app.use(errors.errorHandler);
 
 server.listen(8000, () => {
     console.log('listening on port 8000...')
