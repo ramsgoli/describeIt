@@ -13,16 +13,7 @@ const db = new Sequelize(Config.DB, Config.USER, Config.PASSWORD, {
     },
 })
 
-//Test connection
-db
-    .authenticate()
-    .then(() => {
-        setup(db)
-    })
-    .catch(error => {
-        console.log(error)
-    })
-
+// require our models
 const User = require('./models/User')(db, Sequelize)
 const Game = require('./models/Game')(db, Sequelize)
 const Submission = require('./models/Submission')(db, Sequelize)
@@ -31,15 +22,29 @@ const Question = require('./models/Question')(db, Sequelize)
 // Define associations
 User.belongsTo(Game) // User has a gameId attribute
 Submission.belongsTo(User) // Submission has a userId attribute
-Question.hasOne(Game) // Game has a questionId attribute
+Game.belongsTo(Question) // Game has a questionId attribute
 
-// initialize all questions
-for (let i = 0; i < questions.length; i++) {
-    Promise.resolve(
-        Question.create({
-            text: questions[i]
-        })
-    )
-}
+//Test connection
+db
+    .authenticate()
+    .then(() => {
+        console.log("dropping db");
+        return db.drop();
+    }).then(() => {
+        const options = Config.development ? {force: true} : null;
+
+        console.log("syncing db");
+        return db.sync(options);
+    }).then(() => {
+        // initialize all questions
+        for (let i = 0; i < questions.length; i++) {
+            Question.create({
+                text: questions[i]
+            });
+        }
+    })
+    .catch(error => {
+        console.error(error)
+    })
 
 module.exports = { db, User, Game, Submission, Question }

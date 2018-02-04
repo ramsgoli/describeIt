@@ -1,14 +1,16 @@
 const express = require('express')
+const Sequelize = require('sequelize');
 
 let router = express.Router()
-const { Game, User } = require('../../db')
+const { Game, User, Question } = require('../../db');
+const errors = require('../../errors');
 
 
 /**
  * BODY: accessCode, socketId
  * post to /game with the accessCode to start the game (ie put into Submissions state)
  */
-router.post('/', (req, res) => {
+router.post('/', async (req, res, next) => {
 
     const accessCode = req.body.accessCode
     const socketId = req.body.socketId
@@ -16,31 +18,42 @@ router.post('/', (req, res) => {
     socket = req.io.sockets.connected[socketId]
 
     if (!accessCode) {
-        return res.status(400).json({error: 'No access code provided'})
+        return next(new errors.BadRequest("No access code provided"));
     }
 
-    Game.findOne({
+    if (!socket) {
+        return next(new errors.BadRequest("No matching socket"));
+    }
+
+    const game = await Game.findOne({
         where: {
             accessCode
         }
-    }).then(game => {
-        if (!game) {
-            return res.status(404).json({error: 'Specified game was not found'})
-        }
+    });
 
-        if (game.getDataValue('gameState') !== 'LOBBY_STATE') {
-            // game has already begun
-            res.status(403).json({eror: 'Specified game has alredy begun'})
-        }
+    if (!game) {
+        return next(new errors.NotFound("The specified game was not found"));
+    }
 
-        // set game state to SUBMISSIONS_STATE
-        game.startGame()
+    if (game.getDataValue('gameState') !== 'LOBBY_STATE') {
+        // game has already begun
+        return next(new errors.Forbidden("The game has already begun")); 
+    }
 
-        // tell other players in game that game has started
-        socket.broadcast.to(accessCode).emit('setGameState', 'SUBMISSIONS_STATE')
+    // set game state to SUBMISSIONS_STATE
+    // and assign a random question
+    const question = await Question.find({
+        order: [
+            Sequelize.fn('RANDOM')
+        ], 
+    });
+    game.startGame(question)
 
-        return res.json({game: game.toJSON()})
-    })
+    // tell other players in game that game has started
+    socket.broadcast.to(accessCode).emit('setGameState', 'SUBMISSIONS_STATE')
+    socket.broadcast.to(accessCode).emit('setQuestion', question.text);
+
+    return res.json({game: game.toJSON(), question: question.toJSON()})
 })
 
 router.get('/', (req, res) => {

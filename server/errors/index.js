@@ -18,6 +18,12 @@ class Forbidden extends HttpError {
     }
 }
 
+class NotFound extends HttpError {
+    constructor(message) {
+        super(404, message || "Not Found");
+    }
+}
+
 class InternalError extends HttpError {
     constructor(message) {
         super(500, message || "Internal Error");
@@ -31,5 +37,5 @@ const errorHandler = (err, req, res, next) => {
 }
 
 module.exports = {
-    BadRequest, Forbidden, InternalError, errorHandler
+    BadRequest, Forbidden, InternalError, NotFound, errorHandler
 }

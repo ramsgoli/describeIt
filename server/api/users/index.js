@@ -81,21 +81,20 @@ router.post('/', async (req, res, next) => {
         // Add socket to the room by accessCode
         socket.join(accessCode)
 
-        Game.create({
+        const game = await Game.create({
             accessCode
-        }).then(game => {
+        });
 
-            User.create({
-                name: userName,
-                socketId
-            }).then(user => {
-                user.setGame(game)
+        const user = await User.create({
+            name: userName,
+            socketId
+        })
 
-                return res.json({
-                    accessCode,
-                    currentPlayer: user.public()
-                })
-            })
+        user.setGame(game)
+
+        return res.json({
+            accessCode,
+            currentPlayer: user.public()
         })
     }
 })

@@ -16,11 +16,9 @@ module.exports = (db, Sequelize) => {
             type: Sequelize.STRING
         },
         gameState: {
-            type: Sequelize.STRING,
-            defaultValue: 'LOBBY_STATE',
-            isIn: [
-                Object.keys(gameStates)
-            ]
+            type: Sequelize.ENUM,
+            values: Object.keys(gameStates),
+            defaultValue: "LOBBY_STATE",
         }
     })
 
@@ -28,16 +26,17 @@ module.exports = (db, Sequelize) => {
     Instance-level methods
      */
 
-    Game.prototype.startGame = function() {
-        this.setDataValue('gameState', gameStates.SUBMISSIONS_STATE)
+    Game.prototype.startGame = function(question) {
+        this.gameState = gameStates.SUBMISSIONS_STATE;
+        this.setQuestion(question);
         // Persist the data by calling save()
-        this.save()
+        this.save();
     }
 
     Game.prototype.acceptVotes = function() {
-        this.setDataValue('gameState', gameStates.VOTING_STATE)
+        this.gameState = gameStates.VOTING_STATE;
         // Persist the data by calling save()
-        this.save()
+        this.save();
     }
 
     return Game
