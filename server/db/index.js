@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize')
 const Config = require('../config').db
-const setup = require('./setup')
 
 const questions = require('./questions.json');
 const db = new Sequelize(Config.DB, Config.USER, Config.PASSWORD, {

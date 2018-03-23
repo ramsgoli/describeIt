@@ -20,11 +20,11 @@ html, body {
   box-sizing: inherit;
 }
 
-#mount {
+#root {
   width: 100%;
   height: 100%;
 }
 
-#mount > [data-reactroot] {
+#root > [data-reactroot] {
   height: 100%;
 }
