@@ -99,45 +99,44 @@ router.post('/', async (req, res, next) => {
     }
 })
 
-router.post('/:id/submissions', (req, res) => {
-    const submission = req.body.submission
+router.post('/:id/submissions', async (req, res, next) => {
+    const submissionText = req.body.submission
 
     const sockets = req.io.sockets.connected
-    if (!submission) {
-        return res.status(403).json({error: 'No submission provided'})
+    if (!submissionText) {
+        return next(new errors.BadRequest('No submission provided'));
     }
 
-    User.findOne({
+    const user = await User.findOne({
         where: {
            id: req.params.id
         },
         include: [Game]
-    }).then(user => {
-        if (!user) {
-            return res.status(404).json({error: 'No user found'})
-        }
+    });
+    if (!user) {
+        return next(new errors.NotFound('No user found'));
+    }
 
-        const game = user.game
+    const game = user.game
+    const socket = sockets[user.socketId]
 
-        const socket = sockets[user.socketId]
+    const submission = await Submission.create({
+        text: submissionText
+    })
+    submission.setUser(user)
 
-        Submission.create({
-            text: submission
-        }).then(submission => {
-            submission.setUser(user)
+    socket.broadcast.to(game.accessCode).emit('newSubmission', submission.public())
 
-            socket.broadcast.to(game.accessCode).emit('newSubmission', submission.public())
+    // check if everyone has submitted an answer for this game
+    const submitted = await hasEveryoneSubmitted(game);
+    console.log(submitted)
+    if (submitted) {
+        game.acceptVotes()
+        req.io.to(game.accessCode).emit('setGameState', game.getDataValue('gameState'))
+    }
 
-            // check if everyone has submitted an answer for this game
-            if (hasEveryoneSubmitted()) {
-                game.acceptVotes()
-                req.io.to(game.accessCode).emit('setGameState', game.getDataValue('gameState'))
-            }
-
-            res.json({
-                submission: submission.public()
-            })
-        })
+    res.json({
+        submission: submission.public()
     })
 })
 

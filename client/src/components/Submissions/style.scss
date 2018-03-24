@@ -2,10 +2,9 @@
 
 
 .submissions-container {
-  height: 100vh;
-  min-height: 100%;
-  position: relative;
-  display: inline-block;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
   width: 100%;
   background-color: $orange;
   text-align: center;
