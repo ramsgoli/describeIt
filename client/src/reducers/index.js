@@ -8,6 +8,11 @@ import { Game, createGame, joinGame, startGame, setGameState, setQuestion, gameS
 import { setPlayerName, setSocketId, addSubmission, CurrentPlayer } from './CurrentPlayer'
 import { Players, addPlayer, removePlayer, addPlayerSubmission } from './Players'
 
+let middleware = [thunkMiddleware]
+if (process.env.WEBPACK) {
+    middleware = [...middleware, createLogger({collapsed: true})];
+}
+
 const store = createStore(
     combineReducers({
         CurrentPlayer,
@@ -16,8 +21,7 @@ const store = createStore(
         notifications: notificationsReducer(),
     }),
     applyMiddleware(
-        thunkMiddleware,
-        createLogger({collapsed: true}),
+        ...middleware
     )
 )
 

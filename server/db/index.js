@@ -20,7 +20,7 @@ const Question = require('./models/Question')(db, Sequelize)
 
 // Define associations
 User.belongsTo(Game) // User has a gameId attribute
-Submission.belongsTo(User) // Submission has a userId attribute
+Submission.belongsTo(User, { onDelete: 'cascade' }) // Submission has a userId attribute
 Game.belongsTo(Question) // Game has a questionId attribute
 
 //Test connection
