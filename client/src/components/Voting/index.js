@@ -9,8 +9,8 @@ class Voting extends React.Component {
             return player.get('name')
         })
         return(
-            <div className={css.wrapper}>
-                <div className={css.instructions}>
+            <div className="voting-container">
+                <div className="voting-instructions">
                     Select who you think each submission belongs to
                 </div>
                 {this.props.players.map(player => {

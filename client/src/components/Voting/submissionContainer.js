@@ -14,10 +14,12 @@ class SubmissionContainer extends React.Component {
         }).toJS()
 
         return (
-            <div className={css.submissionContainer}>
-                <Quote />
-                <div className={css.submissionText}>
-                    {this.props.submission}
+            <div className="submission-container">
+                <div className="quote-container">
+                    <Quote />
+                    <div className="submission-text">
+                        {this.props.submission}
+                    </div>
                 </div>
                 <Select
                     options={options}

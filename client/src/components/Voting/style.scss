@@ -1,15 +1,15 @@
 @import '../../styles/vars';
 
 
-.wrapper {
-  height: 100vh;
-  min-height: 100%;
+.voting-container {
+  height: 100%;
   width: 100%;
-  position: absolute;
+  display: flex;
+  flex-flow: column;
   background-color: $red;
 }
 
-.instructions {
+.voting-instructions {
   width: 350px;
   height: 110px;
   background-color: $dark-red;
@@ -23,14 +23,20 @@
   align-items: center;
 }
 
-.submissionContainer {
+.submission-container {
   display: flex;
+  flex-flow: column;
   width: 80%;
   margin: 10px auto;
   color: white;
-}
 
-.submissionText {
-  display: flex;
-  margin-left: 20px;
+  .quote-container {
+    display: flex;
+    flex-flow: row;
+  }
+
+  .submission-text {
+    display: flex;
+    margin-left: 20px;
+  }
 }
