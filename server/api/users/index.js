@@ -3,7 +3,7 @@ const randomstring = require('randomstring')
 
 const { hasEveryoneSubmitted } = require('../utils');
 const errors = require('../../errors');
-const { User, Game, Submission } = require('../../db');
+const { User, Game, Submission, Vote } = require('../../db');
 
 let router = express.Router()
 
@@ -40,8 +40,8 @@ router.post('/', async (req, res, next) => {
                 return next(new errors.BadRequest("Game does not exist"));
             }
 
-            if (game.getDataValue('gameState') === 'SUBMISSIONS_STATE') {
-                // can't join game that has already begun
+            if (game.getDataValue('gameState') !== 'LOBBY_STATE') {
+                // can't join game that is not in lobby 
                 return next(new errors.Forbidden("Game has already begin"));
             }
 
@@ -138,6 +138,45 @@ router.post('/:id/submissions', async (req, res, next) => {
     res.json({
         submission: submission.public()
     })
+})
+
+/*
+body:
+[{
+    submissionID: <submissionID>,
+    userID: <userID>
+},]
+*/
+router.post('/:id/votes', async (req, res, next) => {
+    try {
+        if (!req.body.votes) {
+            return next(new errors.BadRequest('No votes provided'));
+        }
+        const sockets = req.io.sockets.connected
+
+        const user = await User.findOne({
+            where: {
+            id: req.params.id
+            }
+        });
+        if (!user) {
+            return next(new errors.NotFound('No user found'));
+        }
+        
+        const votes = req.body.votes; 
+        for (let i = 0; i < votes.length; i++) {
+            const vote = await Vote.create({
+                submissionId: votes[i].submissionId,
+                userVotedForId: votes[i].userId
+            });
+            await vote.setUser(user);
+        }
+
+        return res.status(200).end();
+    } catch (err) {
+        console.error(err);
+        return next(new errors.InternalError());
+    }
 })
 
 

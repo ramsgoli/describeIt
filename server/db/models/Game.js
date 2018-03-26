@@ -8,9 +8,9 @@ const gameStates = {
 module.exports = (db, Sequelize) => {
     const Game = db.define('game', {
         id: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
             primaryKey: true,
-            autoIncrement: true
         },
         accessCode: {
             type: Sequelize.STRING

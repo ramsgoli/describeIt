@@ -13,15 +13,17 @@ const db = new Sequelize(Config.DB, Config.USER, Config.PASSWORD, {
 })
 
 // require our models
-const User = require('./models/User')(db, Sequelize)
-const Game = require('./models/Game')(db, Sequelize)
-const Submission = require('./models/Submission')(db, Sequelize)
-const Question = require('./models/Question')(db, Sequelize)
+const User = require('./models/User')(db, Sequelize);
+const Game = require('./models/Game')(db, Sequelize);
+const Submission = require('./models/Submission')(db, Sequelize);
+const Question = require('./models/Question')(db, Sequelize);
+const Vote = require('./models/Vote')(db, Sequelize);
 
 // Define associations
 User.belongsTo(Game) // User has a gameId attribute
 Submission.belongsTo(User, { onDelete: 'cascade' }) // Submission has a userId attribute
 Game.belongsTo(Question) // Game has a questionId attribute
+Vote.belongsTo(User);  // Vote has a userId attribute
 
 //Test connection
 db
@@ -46,4 +48,4 @@ db
         console.error(error)
     })
 
-module.exports = { db, User, Game, Submission, Question }
+module.exports = { db, User, Game, Submission, Question, Vote }
