@@ -11,13 +11,13 @@ class Lobby extends React.Component {
                     <h1>{this.props.accessCode}</h1>
                     <hr/>
                 </div>
-                <div className="table">
-                    <div className="row">
+                <div className="lobby-table">
+                    <div className="lobby-row">
                         {`${currentPlayer.get('name')} *`}
                     </div>
                     {this.props.players.map(player => {
                         return (
-                            <div className="row" key={player.get('id')}>
+                            <div className="lobby-row" key={player.get('id')}>
                                 {player.get('name')}
                             </div>
                         )

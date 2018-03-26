@@ -44,7 +44,7 @@
     margin: 0 auto;
   }
 
-  .table {
+  .submissions-table {
     width: 250px;
     height: 40%;
     margin: 30px auto;
@@ -53,7 +53,7 @@
     border: 3px solid $white;
     overflow: scroll;
 
-    .row {
+    .submissions-row {
       padding: 10px;
       vertical-align: top;
       white-space: nowrap;

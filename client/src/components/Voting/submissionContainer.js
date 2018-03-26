@@ -1,18 +1,29 @@
 import React from 'react'
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+
 import Quote from '../Quote'
-import Select from 'react-select'
 
 import css from './style.scss'
 
 class SubmissionContainer extends React.Component {
-    render() {
-        const options = this.props.players.map(player => {
-            return {
-                label: player,
-                value: player
-            }
-        }).toJS()
+    state = {
+        dropdownOpen: false,
+        selected: null,
+    }
 
+    toggle = () => {
+        this.setState({
+            dropdownOpen: !this.state.dropdownOpen
+        });
+    }
+
+    select = name => {
+        this.setState({
+            selected: name
+        });
+    }
+
+    render() {
         return (
             <div className="submission-container">
                 <div className="quote-container">
@@ -21,9 +32,16 @@ class SubmissionContainer extends React.Component {
                         {this.props.submission}
                     </div>
                 </div>
-                <Select
-                    options={options}
-                />
+                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                    <DropdownToggle caret>
+                        {this.state.selected}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                        {this.props.players.map(player => {
+                            return <DropdownItem onClick={e => this.select(e.currentTarget.textContent)}>{player}</DropdownItem>
+                        })}
+                    </DropdownMenu>
+                </Dropdown>
             </div>
         )
     }

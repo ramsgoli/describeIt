@@ -12,6 +12,9 @@ module.exports = {
     filename: 'build/[name].js',
   },
   devtool: 'eval-source-map',
+  resolve: {
+    modules: [path.resolve(__dirname, "src"), "node_modules"],
+  },  
   module: {
     rules: [
       {

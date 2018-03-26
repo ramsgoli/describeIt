@@ -46,14 +46,14 @@ export default class extends React.Component {
                 <div className="btn-container">
                     <Button onClick={this._submit} disabled={this.state.submitted}>Submit</Button>
                 </div>
-                <div className="table">
-                    <div className="row">
+                <div className="submissions-table">
+                    <div className="submissions-row">
                         {`${currentPlayer.get('name')} *`}
                         {submission ? this._renderCheck() : null}
                     </div>
                     {this.props.players.map(player => {
                         return (
-                            <div className="row" key={player.get('id')}>
+                            <div className="submissions-row" key={player.get('id')}>
                                 {player.get('name')}
                                 {player.get('submission') ? this._renderCheck() : null}
                             </div>

@@ -14,7 +14,7 @@ class Button extends React.Component {
         const className = this.props.disabled ? "success disabled" : "success"
 
         return(
-            <button className={`btn ${className}`}
+            <button className={`custom-btn ${className}`}
                 onClick={this._onClick}
             >
                 {this.props.children}
