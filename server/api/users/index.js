@@ -123,13 +123,13 @@ router.post('/:id/submissions', async (req, res, next) => {
     const submission = await Submission.create({
         text: submissionText
     })
-    submission.setUser(user)
+    await submission.setUser(user)  // pause execution until user is set, becuase we use
+                                    // this assocation to check hasEveryoneSubmitted
 
     socket.broadcast.to(game.accessCode).emit('newSubmission', submission.public())
 
     // check if everyone has submitted an answer for this game
     const submitted = await hasEveryoneSubmitted(game);
-    console.log(submitted)
     if (submitted) {
         game.acceptVotes()
         req.io.to(game.accessCode).emit('setGameState', game.getDataValue('gameState'))
