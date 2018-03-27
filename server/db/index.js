@@ -23,7 +23,10 @@ const Vote = require('./models/Vote')(db, Sequelize);
 User.belongsTo(Game) // User has a gameId attribute
 Submission.belongsTo(User, { onDelete: 'cascade' }) // Submission has a userId attribute
 Game.belongsTo(Question) // Game has a questionId attribute
-Vote.belongsTo(User);  // Vote has a userId attribute
+
+Vote.belongsTo(User, { as: 'user', foreignKey: 'userId'});  // Vote has a userId attribute
+Vote.belongsTo(User, { as: 'userVotedFor', foreignKey: 'userVotedForId'})
+Vote.belongsTo(Submission);
 
 //Test connection
 db

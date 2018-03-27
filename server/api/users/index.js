@@ -156,7 +156,7 @@ router.post('/:id/votes', async (req, res, next) => {
 
         const user = await User.findOne({
             where: {
-            id: req.params.id
+                id: req.params.id
             }
         });
         if (!user) {
@@ -165,11 +165,20 @@ router.post('/:id/votes', async (req, res, next) => {
         
         const votes = req.body.votes; 
         for (let i = 0; i < votes.length; i++) {
-            const vote = await Vote.create({
-                submissionId: votes[i].submissionId,
-                userVotedForId: votes[i].userId
+            const submission = await Submission.findOne({
+                where: {
+                    id: votes[i].submissionId
+                }
             });
+            const userVotedFor = await User.findOne({
+                where: {
+                    id: votes[i].userId
+                }
+            })
+            const vote = await Vote.create();
             await vote.setUser(user);
+            await vote.setUserVotedFor(userVotedFor);
+            await vote.setSubmission(submission);
         }
 
         return res.status(200).end();
