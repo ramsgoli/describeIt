@@ -2,7 +2,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { gameActions } from '../reducers'
+import { Actions } from '../reducers'
 
 import Lobby from '../components/Lobby'
 
@@ -33,7 +33,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        startGame: bindActionCreators(gameActions.startGame, dispatch),
+        startGame: bindActionCreators(Actions.gameActions.startGame, dispatch),
     }
 }
 

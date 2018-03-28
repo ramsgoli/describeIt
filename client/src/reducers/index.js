@@ -7,6 +7,7 @@ import {reducer as notificationsReducer} from 'reapop'
 import { Game, createGame, joinGame, startGame, setGameState, setQuestion, gameStates } from './Game'
 import { setPlayerName, setSocketId, addSubmission, CurrentPlayer } from './CurrentPlayer'
 import { Players, addPlayer, removePlayer, addPlayerSubmission } from './Players'
+import { submitVotes, Votes } from './Votes';
 
 let middleware = [thunkMiddleware]
 if (process.env.WEBPACK) {
@@ -18,6 +19,7 @@ const store = createStore(
         CurrentPlayer,
         Players,
         Game,
+        Votes,
         notifications: notificationsReducer(),
     }),
     applyMiddleware(
@@ -37,7 +39,16 @@ const playerActions = {
     addPlayer, removePlayer, addPlayerSubmission
 }
 
-export {store,
-    gameActions, gameStates,
-    currentPlayerActions, playerActions
+const voteActions = {
+    submitVotes
+}
+
+const Actions = {
+    gameActions, currentPlayerActions, playerActions, voteActions
+}
+
+export {
+    store,
+    gameStates,
+    Actions
 }

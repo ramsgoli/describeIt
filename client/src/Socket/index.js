@@ -1,6 +1,6 @@
 import io from 'socket.io-client'
 
-import { store, playerActions, gameActions } from '../reducers'
+import { store, Actions } from '../reducers'
 
 class SocketManager {
     constructor() {
@@ -18,24 +18,24 @@ class SocketManager {
     }
 
     onNewPlayer = (newPlayer) => {
-        store.dispatch(playerActions.addPlayer(newPlayer))
+        store.dispatch(Actions.playerActions.addPlayer(newPlayer))
     }
 
     removePlayer = (player) => {
-        store.dispatch(playerActions.removePlayer(player))
+        store.dispatch(Actions.playerActions.removePlayer(player))
     }
 
     setGameState = (state) => {
-        store.dispatch(gameActions.setGameState(state))
+        store.dispatch(Actions.gameActions.setGameState(state))
     }
 
     onNewSubmission = (submission) => {
-        store.dispatch(playerActions.addPlayerSubmission(submission))
+        store.dispatch(Actions.playerActions.addPlayerSubmission(submission))
     }
 
     setQuestion = (question) => {
         console.log(question);
-        store.dispatch(gameActions.setQuestion(question));
+        store.dispatch(Actions.gameActions.setQuestion(question));
     }
 }
 

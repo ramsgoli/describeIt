@@ -9,6 +9,7 @@ module.exports = server => {
 
         socket.on('disconnect', () => {
             // Get the user corresponding to this socketid
+            console.log('disconnect');
             User.findOne({
                 where: {
                     socketId: socket.id

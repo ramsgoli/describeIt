@@ -17,10 +17,11 @@ class SubmissionContainer extends React.Component {
         });
     }
 
-    select = name => {
+    select = (userId, name) => {
         this.setState({
             selected: name
         });
+        this.props.vote(this.props.submission.get('id'), userId)
     }
 
     render() {
@@ -29,7 +30,7 @@ class SubmissionContainer extends React.Component {
                 <div className="quote-container">
                     <Quote />
                     <div className="submission-text">
-                        {this.props.submission}
+                        {this.props.submission.get('text')}
                     </div>
                 </div>
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -38,7 +39,7 @@ class SubmissionContainer extends React.Component {
                     </DropdownToggle>
                     <DropdownMenu>
                         {this.props.players.map(player => {
-                            return <DropdownItem onClick={e => this.select(e.currentTarget.textContent)}>{player}</DropdownItem>
+                            return <DropdownItem onClick={() => this.select(player.get('id'), player.get('name'))}>{player.get('name')}</DropdownItem>
                         })}
                     </DropdownMenu>
                 </Dropdown>

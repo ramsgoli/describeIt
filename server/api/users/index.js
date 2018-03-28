@@ -181,7 +181,9 @@ router.post('/:id/votes', async (req, res, next) => {
             await vote.setSubmission(submission);
         }
 
-        return res.status(200).end();
+        return res.status(200).json({
+            message: "Success"
+        });
     } catch (err) {
         console.error(err);
         return next(new errors.InternalError());

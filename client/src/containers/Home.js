@@ -2,7 +2,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { gameActions, gameStates, currentPlayerActions } from '../reducers'
+import { gameStates, Actions } from '../reducers'
 
 import HomeComponent from '../components/Home'
 import SocketManager from '../Socket'
@@ -39,9 +39,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createGame: bindActionCreators(gameActions.createGame, dispatch),
-        joinGame: bindActionCreators(gameActions.joinGame, dispatch),
-        setSocketId: bindActionCreators(currentPlayerActions.setSocketId, dispatch)
+        createGame: bindActionCreators(Actions.gameActions.createGame, dispatch),
+        joinGame: bindActionCreators(Actions.gameActions.joinGame, dispatch),
+        setSocketId: bindActionCreators(Actions.currentPlayerActions.setSocketId, dispatch)
     }
 }
 

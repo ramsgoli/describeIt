@@ -2,7 +2,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { currentPlayerActions } from '../reducers'
+import { Actions } from '../reducers'
 import Submissions from '../components/Submissions'
 
 class SubmissionsContainer extends React.Component {
@@ -33,7 +33,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addSubmission: bindActionCreators(currentPlayerActions.addSubmission, dispatch)
+        addSubmission: bindActionCreators(Actions.currentPlayerActions.addSubmission, dispatch)
     }
 }
 

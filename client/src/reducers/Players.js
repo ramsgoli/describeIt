@@ -52,7 +52,7 @@ REDUCERS
 player: {
     name: '',
     id: null,
-    submission: ''
+    submission: {} 
 }
  */
 
@@ -80,7 +80,7 @@ export const Players = (state=initialState, action) => {
         case ADD_SUBMISSION: {
             return state.withMutations(val => {
                 const idx = val.get('players').findIndex(player => player.get('id') === action.submission.userId)
-                val.set('players', val.get('players').setIn([idx, 'submission'], action.submission.text))
+                val.set('players', val.get('players').setIn([idx, 'submission'], fromJS(action.submission)))
             })
         }
         default:

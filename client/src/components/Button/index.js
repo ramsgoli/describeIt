@@ -10,7 +10,6 @@ class Button extends React.Component {
         /**
          * primary:
          */
-
         const className = this.props.disabled ? "success disabled" : "success"
 
         return(
