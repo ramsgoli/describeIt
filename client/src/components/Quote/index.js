@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default () => {
+export default props => {
     return (
-        <div className="quote">
+        <div className={`quote quote-${props.className}`}>
             <span>&ldquo;</span>
         </div>
     );

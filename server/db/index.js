@@ -25,8 +25,8 @@ Submission.belongsTo(User, { onDelete: 'cascade' }) // Submission has a userId a
 Submission.belongsTo(Game);
 Game.belongsTo(Question) // Game has a questionId attribute
 
-Vote.belongsTo(User, { as: 'user', foreignKey: 'userId'});  // Vote has a userId attribute
-Vote.belongsTo(User, { as: 'userVotedFor', foreignKey: 'userVotedForId'})
+Vote.belongsTo(User, { as: 'user', foreignKey: 'userId', onDelete: 'cascade'});  // Vote has a userId attribute
+Vote.belongsTo(User, { as: 'userVotedFor', foreignKey: 'userVotedForId', onDelete: 'cascade'})
 Vote.belongsTo(Submission);
 
 //Test connection

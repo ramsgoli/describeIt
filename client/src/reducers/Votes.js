@@ -79,14 +79,12 @@ export const Votes = (state=initialState, action) => {
                     submissionID: action.submissionID,
                     userID: action.userID
                 })
-                val.setIn(['_internal', 'loading'], false);
-                val.setIn(['_internal', 'success'], true);
                 val.set('votes', val.get('votes').push(vote));
             })
         }
         case SET_RESULTS: {
             return state.withMutations(val => {
-                val.set('results', action.results);
+                val.set('results', fromJS(action.results));
             })
         }
         default: return state

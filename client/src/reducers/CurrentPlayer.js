@@ -97,7 +97,7 @@ export const CurrentPlayer = (state=initialState, action) => {
 
         case ADD_SUBMISSION: {
             return state.withMutations(val => {
-                val.set('submission', action.submission)
+                val.set('submission', fromJS(action.submission))
             })
         }
 

@@ -8,17 +8,21 @@ import Results from 'components/Results';
 class ResultsContainer extends React.Component {
     render() {
         return(
-            <Results />
+            <Results 
+                results={this.props.results}
+                players={this.props.players}
+                currentPlayer={this.props.currentPlayer}
+            />
         );
     }
 }
 
 const mapStateToProps = state => {
-    return {};
+    return {
+        results: state.Votes.get('results'),
+        players: state.Players.get('players'),
+        currentPlayer: state.CurrentPlayer,
+    };
 }
 
-const mapDispatchToProps = dispatch => {
-    return {};
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ResultsContainer);
+export default connect(mapStateToProps)(ResultsContainer);

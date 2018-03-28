@@ -30,20 +30,20 @@
   margin: 10px auto;
   color: white;
 
-  .quote-container {
-    display: flex;
-    flex-flow: row;
-  }
-
-  .submission-text {
-    display: flex;
-    margin-left: 20px;
-    font-size: 1.2em;
-  }
-
   & > div {
     padding-bottom: 10px;
   }
+}
+
+.quote-container {
+  display: flex;
+  flex-flow: row;
+}
+
+.submission-text {
+  display: flex;
+  margin-left: 20px;
+  font-size: 1.2em;
 }
 
 .dropdown {

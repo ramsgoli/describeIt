@@ -1,0 +1,36 @@
+@import "styles/vars";
+
+.results-container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  height: 100%;
+  background-color: $purple;
+
+  .heading {
+    width: 350px;
+    height: 90px;
+    background-color: $dark-purple;
+    color: $white;
+    margin: 25px auto 0 auto;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.5em;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .winners {
+    color: $white;
+    width: 100%;
+
+    .winner {
+      padding: 20px;
+    }
+    h1 {
+      font-size: 1.2em;
+    }
+  }
+}

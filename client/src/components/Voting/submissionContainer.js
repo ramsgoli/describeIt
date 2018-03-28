@@ -28,7 +28,7 @@ class SubmissionContainer extends React.Component {
         return (
             <div className="submission-container">
                 <div className="quote-container">
-                    <Quote />
+                    <Quote className="red"/>
                     <div className="submission-text">
                         {this.props.submission.get('text')}
                     </div>
