@@ -83,6 +83,17 @@ const calculateWinners = async gameId => {
                 }
             }
         }
+
+        let winners = [];
+        const usersSorted = Object.keys(results).sort((a,b) => results[b]-results[a])
+        winners.push(usersSorted[0]);
+        for (let i = 1; i < usersSorted.length; i++) {
+            if (results[usersSorted[i]] == results[winners[0]]) {
+                winners.push(usersSorted[i]);
+            }
+        }
+
+        results['winners'] = winners
         
         return results;
 
