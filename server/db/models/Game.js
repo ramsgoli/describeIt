@@ -2,7 +2,9 @@ const gameStates = {
     ERROR_STATE: 'ERROR_STATE',
     LOBBY_STATE: 'LOBBY_STATE',
     SUBMISSIONS_STATE: 'SUBMISSIONS_STATE',
-    VOTING_STATE: 'VOTING_STATE'
+    VOTING_STATE: 'VOTING_STATE',
+    CALCULATING_STATE: 'CALCULATING_STATE',
+    RESULTS_STATE: 'RESULTS_STATE',
 }
 
 module.exports = (db, Sequelize) => {
@@ -37,6 +39,10 @@ module.exports = (db, Sequelize) => {
         this.gameState = gameStates.VOTING_STATE;
         // Persist the data by calling save()
         this.save();
+    }
+
+    Game.prototype.generateResults = function() {
+        this.gameState = gameStates.CALCULATING_STATE;
     }
 
     return Game

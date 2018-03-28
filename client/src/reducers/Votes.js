@@ -28,7 +28,6 @@ export const submitVotes = votes => {
             })
 
             const status = await response.status;
-            const data = await response.json();
 
             if (status < 200 || status >= 400) {
                 throw new Error("Bad Response")

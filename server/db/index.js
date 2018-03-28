@@ -22,6 +22,7 @@ const Vote = require('./models/Vote')(db, Sequelize);
 // Define associations
 User.belongsTo(Game) // User has a gameId attribute
 Submission.belongsTo(User, { onDelete: 'cascade' }) // Submission has a userId attribute
+Submission.belongsTo(Game);
 Game.belongsTo(Question) // Game has a questionId attribute
 
 Vote.belongsTo(User, { as: 'user', foreignKey: 'userId'});  // Vote has a userId attribute

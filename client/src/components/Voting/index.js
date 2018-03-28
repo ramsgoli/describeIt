@@ -34,7 +34,7 @@ class Voting extends React.Component {
         if (loading) {
             return <Loader />
         } else if (success) {
-            return <i className="fa fa-check"></i>;
+            return <div>Submitted <i className="fa fa-check"></i></div>;
         } else {
             return "Submit";
         }

@@ -1,7 +1,7 @@
 const express = require('express')
 const randomstring = require('randomstring')
 
-const { hasEveryoneSubmitted } = require('../utils');
+const { hasEveryoneSubmitted, hasEveryoneVoted, calculateWinners } = require('../utils');
 const errors = require('../../errors');
 const { User, Game, Submission, Vote } = require('../../db');
 
@@ -123,7 +123,8 @@ router.post('/:id/submissions', async (req, res, next) => {
     const submission = await Submission.create({
         text: submissionText
     })
-    await submission.setUser(user)  // pause execution until user is set, becuase we use
+    await submission.setGame(game);
+    await submission.setUser(user);  // pause execution until user is set, becuase we use
                                     // this assocation to check hasEveryoneSubmitted
 
     socket.broadcast.to(game.accessCode).emit('newSubmission', submission.public())
@@ -170,20 +171,32 @@ router.post('/:id/votes', async (req, res, next) => {
                     id: votes[i].submissionId
                 }
             });
+            if (!submission) {
+                return next(new errors.NotFound(`Submission id: ${votes[i].submissionId} not found`));
+            }
+
             const userVotedFor = await User.findOne({
                 where: {
                     id: votes[i].userId
                 }
-            })
+            });
+            if (!userVotedFor) {
+                return next(new errors.NotFound(`User id: ${votes[i].submissionId} not found`));
+            }
+
             const vote = await Vote.create();
             await vote.setUser(user);
             await vote.setUserVotedFor(userVotedFor);
             await vote.setSubmission(submission);
         }
+        res.status(200).end();
 
-        return res.status(200).json({
-            message: "Success"
-        });
+        // check if everyone has submitted their votes
+        const everyoneVoted = await hasEveryoneVoted(user.gameId);
+        if (everyoneVoted) {
+            const results = calculateWinners(user.gameId);
+        }
+
     } catch (err) {
         console.error(err);
         return next(new errors.InternalError());
