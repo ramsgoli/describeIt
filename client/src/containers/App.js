@@ -9,7 +9,8 @@ import Home from './Home'
 import Lobby from './Lobby'
 import SubmissionsContainer from './Submissions'
 import VotingContainer from './Voting'
-import { gameStates } from '../reducers/index'
+import ResultsContainer from './Results'
+import { gameStates } from '../reducers'
 
 class App extends React.Component {
     render() {
@@ -31,6 +32,10 @@ class App extends React.Component {
             case gameStates.VOTING_STATE: {
                 gameComponent = <VotingContainer />
                 break
+            }
+            case gameStates.RESULTS_STATE: {
+                gameComponent = <ResultsContainer />
+                break;
             }
             default: {
                 gameComponent = <Home />

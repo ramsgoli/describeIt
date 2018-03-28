@@ -10,6 +10,15 @@ const SUBMIT_VOTE_START = 'SUBMIT_VOTE_START';
 const SUBMIT_VOTE_ERROR = 'SUBMIT_VOTE_ERROR';
 const SUBMIT_VOTE_SUCCESS = 'SUBMIT_VOTE_SUCCESS';
 
+const SET_RESULTS = 'SET_RESULTS';
+
+export const setResults = results => {
+    return {
+        type: SET_RESULTS,
+        results
+    }
+}
+
 export const submitVotes = votes => {
     return async (dispatch, getState) => {
         dispatch({type: SUBMIT_VOTE_START})
@@ -43,6 +52,7 @@ export const submitVotes = votes => {
 
 const initialState = fromJS({
     votes: [],
+    results: {},
     _internal: {
         error: null,
         loading: false,
@@ -72,6 +82,11 @@ export const Votes = (state=initialState, action) => {
                 val.setIn(['_internal', 'loading'], false);
                 val.setIn(['_internal', 'success'], true);
                 val.set('votes', val.get('votes').push(vote));
+            })
+        }
+        case SET_RESULTS: {
+            return state.withMutations(val => {
+                val.set('results', action.results);
             })
         }
         default: return state

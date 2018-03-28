@@ -3,6 +3,7 @@ const randomstring = require('randomstring')
 
 const { hasEveryoneSubmitted, hasEveryoneVoted, calculateWinners } = require('../utils');
 const errors = require('../../errors');
+const config = require('../../config');
 const { User, Game, Submission, Vote } = require('../../db');
 
 let router = express.Router()
@@ -158,7 +159,8 @@ router.post('/:id/votes', async (req, res, next) => {
         const user = await User.findOne({
             where: {
                 id: req.params.id
-            }
+            },
+            include: [Game]
         });
         if (!user) {
             return next(new errors.NotFound('No user found'));
@@ -194,7 +196,9 @@ router.post('/:id/votes', async (req, res, next) => {
         // check if everyone has submitted their votes
         const everyoneVoted = await hasEveryoneVoted(user.gameId);
         if (everyoneVoted) {
-            const results = calculateWinners(user.gameId);
+            const results = await calculateWinners(user.gameId);
+            req.io.to(user.game.accessCode).emit('results', results);
+            req.io.to(user.game.accessCode).emit('setGameState', 'RESULTS_STATE');
         }
 
     } catch (err) {

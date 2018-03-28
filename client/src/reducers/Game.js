@@ -15,12 +15,15 @@ THIS FILE MANAGES GENERAL GAME STATE
 Game states
  */
 
-const ERROR_STATE = 'ERROR_STATE'
-const NULL_STATE = 'NULL_STATE'
-const LOBBY_STATE = 'LOBBY_STATE'
-const SUBMISSIONS_STATE = 'SUBMISSIONS_STATE'
-const VOTING_STATE = 'VOTING_STATE'
-export const gameStates = {ERROR_STATE, NULL_STATE, LOBBY_STATE, SUBMISSIONS_STATE, VOTING_STATE}
+export const gameStates = {
+    ERROR_STATE: 'ERROR_STATE',
+    NULL_STATE: 'NULL_STATE',
+    LOBBY_STATE: 'LOBBY_STATE',
+    SUBMISSIONS_STATE: 'SUBMISSIONS_STATE',
+    VOTING_STATE: 'VOTING_STATE',
+    CALCULATING_STATE: 'CALCULATING_STATE',
+    RESULTS_STATE: 'RESULTS_STATE'
+}
 
 
 // constants
@@ -206,7 +209,7 @@ export const startGame = () => {
 
 const initialState = fromJS({
     question: "",
-    gameState: NULL_STATE,
+    gameState: gameStates.NULL_STATE,
     _internal: {
         loading: false,
         errors: []
@@ -224,24 +227,24 @@ export const Game = (state=initialState, action) => {
         case CREATE_GAME_SUCCESS: {
             return state.withMutations(val => {
                 val.set('accessCode', action.accessCode)
-                val.set('gameState', LOBBY_STATE)
+                val.set('gameState', gameStates.LOBBY_STATE)
             })
         }
         case JOIN_GAME_SUCCESS: {
             return state.withMutations(val => {
                 val.set('accessCode', action.accessCode)
-                val.set('gameState', LOBBY_STATE)
+                val.set('gameState', gameStates.LOBBY_STATE)
             })
         }
         case CREATE_GAME_FAILURE: {
             return state.withMutations(val => {
-                val.set('gameState', ERROR_STATE)
+                val.set('gameState', gameStates.ERROR_STATE)
                 val.setIn(['_internal', 'errors'], val.getIn(['_internal', 'errors']).push(action.error))
             })
         }
         case JOIN_GAME_FAILURE: {
             return state.withMutations(val => {
-                val.set('gameState', ERROR_STATE)
+                val.set('gameState', gameStates.ERROR_STATE)
                 val.setIn(['_internal', 'errors'], val.getIn(['_internal', 'errors']).push(action.error))
             })
         }

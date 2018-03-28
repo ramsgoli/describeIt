@@ -7,7 +7,7 @@ import {reducer as notificationsReducer} from 'reapop'
 import { Game, createGame, joinGame, startGame, setGameState, setQuestion, gameStates } from './Game'
 import { setPlayerName, setSocketId, addSubmission, CurrentPlayer } from './CurrentPlayer'
 import { Players, addPlayer, removePlayer, addPlayerSubmission } from './Players'
-import { submitVotes, Votes } from './Votes';
+import { submitVotes, setResults, Votes } from './Votes';
 
 let middleware = [thunkMiddleware]
 if (process.env.WEBPACK) {
@@ -40,7 +40,7 @@ const playerActions = {
 }
 
 const voteActions = {
-    submitVotes
+    submitVotes, setResults
 }
 
 const Actions = {
