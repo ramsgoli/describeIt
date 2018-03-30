@@ -66,29 +66,47 @@ const calculateWinners = async gameId => {
 
         for (let i = 0; i < users.length; i++) {
             const user = users[i];
-            results[user.name] = 0;
+            results[user.name] = {};
+            results[user.name]['numCorrect'] = 0;
+            results[user.name]['votes'] = [];
 
             const votes = await Vote.findAll({
                 where: {
                     userId: user.id
                 },
-                include: [Submission]
+                include: [{
+                    model: Submission
+                },
+                {
+                    model: User,
+                    as: 'userVotedFor'
+                }]
             });
             for (let j = 0; j < votes.length; j++) {
                 const vote = votes[j];
 
                 if (vote.userVotedForId == vote.submission.userId) {
-                    console.log('got a match!');    
-                    results[user.name] += 1;
+                    results[user.name]['numCorrect'] += 1;
+                    results[user.name]['votes'].push({
+                        text: vote.submission.text,
+                        votedFor: vote.userVotedFor.name,
+                        correct: true
+                    });
+                } else {
+                    results[user.name]['votes'].push({
+                        text: vote.submission.text,
+                        votedFor: vote.userVotedFor.name,
+                        correct: false
+                    });
                 }
             }
         }
 
         let winners = [];
-        const usersSorted = Object.keys(results).sort((a,b) => results[b]-results[a])
+        const usersSorted = Object.keys(results).sort((a,b) => results[b]['numCorrect']-results[a]['numCorrect'])
         winners.push(usersSorted[0]);
         for (let i = 1; i < usersSorted.length; i++) {
-            if (results[usersSorted[i]] == results[winners[0]]) {
+            if (results[usersSorted[i]]['numCorrect'] == results[winners[0]]['numCorrect']) {
                 winners.push(usersSorted[i]);
             }
         }
