@@ -55,6 +55,7 @@ const hasEveryoneVoted = async gameId => {
 
 const calculateWinners = async gameId => {
     let results = {};
+    results.players = [];
 
     try {
         
@@ -66,9 +67,10 @@ const calculateWinners = async gameId => {
 
         for (let i = 0; i < users.length; i++) {
             const user = users[i];
-            results[user.name] = {};
-            results[user.name]['numCorrect'] = 0;
-            results[user.name]['votes'] = [];
+            let record = {};
+            record.name = user.name;
+            record.numCorrect = 0;
+            record.votes = [];
 
             const votes = await Vote.findAll({
                 where: {
@@ -86,28 +88,29 @@ const calculateWinners = async gameId => {
                 const vote = votes[j];
 
                 if (vote.userVotedForId == vote.submission.userId) {
-                    results[user.name]['numCorrect'] += 1;
-                    results[user.name]['votes'].push({
+                    record.numCorrect += 1;
+                    record.votes.push({
                         text: vote.submission.text,
                         votedFor: vote.userVotedFor.name,
                         correct: true
                     });
                 } else {
-                    results[user.name]['votes'].push({
+                    record.votes.push({
                         text: vote.submission.text,
                         votedFor: vote.userVotedFor.name,
                         correct: false
                     });
                 }
             }
+            results.players.push(record);
         }
 
         let winners = [];
-        const usersSorted = Object.keys(results).sort((a,b) => results[b]['numCorrect']-results[a]['numCorrect'])
-        winners.push(usersSorted[0]);
+        const usersSorted = results.players.sort((a,b) => b['numCorrect']-a['numCorrect']);
+        winners.push(usersSorted[0].name);
         for (let i = 1; i < usersSorted.length; i++) {
-            if (results[usersSorted[i]]['numCorrect'] == results[winners[0]]['numCorrect']) {
-                winners.push(usersSorted[i]);
+            if (usersSorted[i].numCorrect == usersSorted[0].numCorrect) {
+                winners.push(usersSorted[i].name);
             }
         }
 
