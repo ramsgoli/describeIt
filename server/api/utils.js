@@ -1,4 +1,5 @@
-const { User, Submission, Vote } = require('../db')
+const { User, Submission, Vote } = require('../db');
+const Sequelize = require('sequelize');
 /*
  returns true if every player in this game has a submission
  */
@@ -123,8 +124,27 @@ const calculateWinners = async gameId => {
         return results;
     }
 }
+
+const mapQuestion = async (questionText, gameId) => {
+    try {
+        const user = await User.findOne({
+            where: {
+                gameId
+            },
+            order: [
+                Sequelize.fn('RANDOM')
+            ],
+        });
+        return questionText.replace('{{}}', user.name);
+    } catch (err) {
+        console.error(err);
+        return questionText;
+    }
+}
+
 module.exports = {
     hasEveryoneSubmitted,
     hasEveryoneVoted,
     calculateWinners,
+    mapQuestion,
 }

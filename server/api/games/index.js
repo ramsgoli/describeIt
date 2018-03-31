@@ -4,6 +4,7 @@ const Sequelize = require('sequelize');
 let router = express.Router()
 const { Game, User, Question } = require('../../db');
 const errors = require('../../errors');
+const { mapQuestion } = require('../utils');
 
 
 /**
@@ -48,12 +49,13 @@ router.post('/', async (req, res, next) => {
         ], 
     });
     game.startGame(question)
+    const mappedQuestion = await mapQuestion(question.text, game.id);
 
     // tell other players in game that game has started
     socket.broadcast.to(accessCode).emit('setGameState', 'SUBMISSIONS_STATE')
-    socket.broadcast.to(accessCode).emit('setQuestion', question.text);
+    socket.broadcast.to(accessCode).emit('setQuestion', mappedQuestion);
 
-    return res.json({game: game.toJSON(), question: question.toJSON()})
+    return res.json({game: game.toJSON(), question: mappedQuestion})
 })
 
 router.get('/', (req, res) => {

@@ -199,7 +199,7 @@ export const startGame = () => {
             .then(resp => resp.json())
             .then(resp => {
                 dispatch(startGameSuccess(resp.game))
-                dispatch(setQuestion(resp.question.text))
+                dispatch(setQuestion(resp.question))
             })
             .catch(error => {
                 dispatch(startGameFailure(error))
