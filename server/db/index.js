@@ -27,7 +27,7 @@ Game.belongsTo(Question) // Game has a questionId attribute
 
 Vote.belongsTo(User, { as: 'user', foreignKey: 'userId', onDelete: 'cascade'});  // Vote has a userId attribute
 Vote.belongsTo(User, { as: 'userVotedFor', foreignKey: 'userVotedForId', onDelete: 'cascade'})
-Vote.belongsTo(Submission);
+Vote.belongsTo(Submission, { onDelete: 'cascade'});
 
 //Test connection
 db

@@ -13,6 +13,7 @@ class SubmissionsContainer extends React.Component {
                 players={this.props.players}
                 currentPlayer={this.props.currentPlayer}
                 addSubmission={this.props.addSubmission}
+                _internal={this.props._internal}
             />
         )
     }
@@ -28,6 +29,7 @@ const mapStateToProps = state => {
         question: Game.get('question'),
         currentPlayer: CurrentPlayer,
         players: Players.get('players'),
+        _internal: CurrentPlayer.get('_internal')
     }
 }
 

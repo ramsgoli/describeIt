@@ -2,8 +2,17 @@ import React from 'react'
 import Button from '../Button'
 
 class Lobby extends React.Component {
-    render() {
+    state = {
+        loading: false
+    }
 
+    startGame = () => {
+        this.setState({
+            loading: true
+        })
+        this.props.startGame();
+    }
+    render() {
         const currentPlayer = this.props.currentPlayer
         return (
             <div className="lobby-container">
@@ -24,7 +33,7 @@ class Lobby extends React.Component {
                     })}
                 </div>
                 <div className="btn-container">
-                    <Button onClick={this.props.startGame}>Start Game</Button>
+                    <Button onClick={this.startGame} disabled={this.state.loading}>Start Game</Button>
                 </div>
             </div>
         )

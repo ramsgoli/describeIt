@@ -2,6 +2,7 @@
 .custom-btn {
 	text-align: center;
 	border: none;
+	outline: none;
 	font-family: inherit;
 	font-size: inherit;
 	cursor: pointer;
@@ -11,29 +12,37 @@
 	letter-spacing: 1px;
 	font-weight: 700;
 	position: relative;
-    transition: 0.125s ease-in-out;
+	transition: 0.125s ease-in-out;
 	color: #fff;
 	width: 200px;
 	border-radius: 50px;
-	outline: 0;
+
+	&:focus {
+		outline: 0;
+	}
 }
 
 .success {
 	background: #6BE886;
 	box-shadow: 0 6px #158D2F;
-
-	&:hover {
-		transform: translateY(1px);
-		box-shadow: 0 4px #158D2F;
-	}
-
-	&:active {
-		box-shadow: 0 0 #158D2F;
-		transform: translateY(4px);
-	}
 }
 
 .disabled {
-	cursor: not-allowed;
+	background: #CCCCCC;
+	color: white;
+	cursor: default;
+	-webkit-transform: translateY(4px);
+	transform: translateY(4px);
+	box-shadow: 0 0px 0 $gray1;
+}
+
+.success:hover {
+	transform: translateY(1px);
+	box-shadow: 0 4px #158D2F;
+}
+
+.success:active {
+	box-shadow: 0 0 #158D2F;
+	transform: translateY(4px);
 }
 

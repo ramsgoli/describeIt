@@ -17,7 +17,6 @@ class Voting extends React.Component {
             submissionId,
             userId
         };
-        console.log(_vote);
         this.setState({
             votes: [...votes, _vote]
         })
@@ -41,7 +40,7 @@ class Voting extends React.Component {
     }
 
     render() {
-        console.log(this.state);
+        const success = this.props._internal.get('success');
         return(
             <div className="voting-container">
                 <div className="voting-instructions">
@@ -57,7 +56,7 @@ class Voting extends React.Component {
                         />
                     );
                 })}
-                <Button onClick={this.submit}>{this.renderButtonContents()}</Button>
+                <Button onClick={this.submit} disabled={success}>{this.renderButtonContents()}</Button>
             </div>
         )
     }

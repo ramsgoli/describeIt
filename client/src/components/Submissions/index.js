@@ -16,7 +16,7 @@ export default class extends React.Component {
 
     _submit = () => {
         this.setState({
-            submitted: true
+            loading: true
         })
         this.props.addSubmission(this.state.answer)
     }
@@ -32,6 +32,7 @@ export default class extends React.Component {
     render() {
         const { currentPlayer } = this.props
         const submission = currentPlayer.get('submission')
+        const submitted = this.props._internal.get('submitted');
 
         return(
             <div className="submissions-container">
@@ -44,7 +45,7 @@ export default class extends React.Component {
                     onChange={this.onChange}
                 />
                 <div className="btn-container">
-                    <Button onClick={this._submit} disabled={this.state.submitted}>Submit</Button>
+                    <Button onClick={this._submit} loading={this.state.loading} disabled={submitted}>{submitted ? "Submitted" : "Submit"}</Button>
                 </div>
                 <div className="submissions-table">
                     <div className="submissions-row">

@@ -3,14 +3,16 @@ import React from 'react'
 class Button extends React.Component {
 
     _onClick = () => {
-        this.props.onClick()
+        if (!this.props.disabled) {
+            this.props.onClick()
+        }
     }
 
     render() {
         /**
          * primary:
          */
-        const className = this.props.disabled ? "success disabled" : "success"
+        const className = this.props.disabled ? "disabled" : "success"
 
         return(
             <button className={`custom-btn ${className}`}

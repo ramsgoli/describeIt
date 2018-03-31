@@ -3,7 +3,7 @@ export default (response) => {
         return response
     } else {
         let error = new Error(response.statusText)
-        error.response = response
+        error.message = response
         throw error
     }
 }
