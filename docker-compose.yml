@@ -1,27 +1,27 @@
-version: '2'
+version: '3'
 services:
-    web:
-        build: ./server
-        command: npm run start-dev
-        volumes:
-            - ./server:/describeIt/
-            - /describeIt/node_modules
-        ports:
-            - "8000:8000"
-        depends_on:
-            - postgres
-        environment:
-            DATABASE_URL: postgres://describeItApp:describeIt@postgres/describeIt
-    postgres:
-        image: postgres:9.6-alpine
-        environment:
-          POSTGRES_USER: describeItApp
-          POSTGRES_DB: describeIt
-          POSTGRES_PASSWORD: describeIt
-        volumes:
-          - postgres_data:/var/lib/postgresql/data
-        ports:
-          - "127.0.0.1:6432:5432"
+  web:
+    build: ./server
+    env_file:
+      - ./server/db.env
+    command: ["npm", "run", "start-dev"]
+    volumes:
+      - ./server:/describeIt/
+      - /describeIt/node_modules
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://describeItApp:describeIt@postgres/describeIt
+  postgres:
+    image: postgres:9.6-alpine
+    env_file:
+      - ./server/db.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:6432:5432"
 volumes:
   postgres_data:
 

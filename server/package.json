@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
     "start-dev": "nodemon index.js"
   },
   "author": "Ram Goli",
@@ -12,9 +13,10 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
     "express": "^4.15.4",
     "morgan": "^1.8.2",
-    "pg": "^7.1.2",
+    "pg": "^6.4.2",
     "randomstring": "^1.1.5",
     "sequelize": "^4.5.0",
     "socket.io": "^2.0.3"
