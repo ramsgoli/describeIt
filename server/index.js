@@ -18,7 +18,7 @@ midddlewares
  */
 
 // attach io instance to every api request
-app.use(function(req, res, next){
+app.use(function(req, res, next) {
     req.io = io
     next()
 })

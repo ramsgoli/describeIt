@@ -1,8 +1,9 @@
 const Sequelize = require('sequelize')
-const Config = require('../config').db
+
+const Config = require('../config')
 
 const questions = require('./questions.json');
-const db = new Sequelize(Config.DB, Config.USER, Config.PASSWORD, {
+const db = new Sequelize(Config.db.DB, Config.db.USER, Config.db.PASSWORD, {
     dialect: 'postgres',
     host: 'postgres',
     pool: {

@@ -1,9 +1,9 @@
 module.exports = {
     development: true,
     db: {
-        DB: 'describeIt',
-        USER: 'describeItApp',
-        PASSWORD: 'describeIt'
+        DB: process.env.POSTGRES_DB,
+        USER: process.env.POSTGRES_USER,
+        PASSWORD: process.env.POSTGRES_PASSWORD 
     },
     gameStates: {
         ERROR_STATE: 'ERROR_STATE',
