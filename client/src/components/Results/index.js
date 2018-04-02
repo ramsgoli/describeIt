@@ -65,6 +65,10 @@ class Results extends React.Component {
                 <div className="players">
                     {this.renderPlayers()}
                 </div>
+                <div className="tap">
+                    <i className="fa fa-arrow-up"></i>
+                    <p> Tap to see what they voted</p>
+                </div>
             </div>
         );
     }

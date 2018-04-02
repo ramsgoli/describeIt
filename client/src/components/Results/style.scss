@@ -33,4 +33,18 @@
       font-size: 1.2em;
     }
   }
+
+  .tap {
+    color: $white;
+    font-size: 1.1em;
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    padding: 10px;
+    justify-content: center;
+    
+    i {
+      margin-right: 5px;
+    }
+  }
 }
