@@ -25,10 +25,19 @@
   .winners, .players  {
     color: $white;
     width: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
 
     .winner, .player {
-      padding: 20px;
+      margin: 20px;
+      display: inline-block;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
+
     h1 {
       font-size: 1.2em;
     }
@@ -41,10 +50,16 @@
     display: flex;
     flex-flow: row;
     padding: 10px;
-    justify-content: center;
+    justify-content: center;j
     
     i {
       margin-right: 5px;
     }
+
   }
+}
+
+.player-votes-container {
+  height: 100%;
+  background-color: $purple;
 }
