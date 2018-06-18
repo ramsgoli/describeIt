@@ -77,16 +77,18 @@ class Results extends React.Component {
         if (this.state.showingResults) {
             return (
                 <div className="results-container">
-                    <div className="heading">Results</div>
-                    <div className="winners">
-                        {this.renderWinners()}
-                    </div>
-                    <div className="players">
-                        {this.renderPlayers()}
-                    </div>
-                    <div className="tap">
-                        <i className="fa fa-arrow-up"></i>
-                        <p> Tap to see what they voted</p>
+                    <div className="container">
+                        <div className="heading">Results</div>
+                        <div className="winners">
+                            {this.renderWinners()}
+                        </div>
+                        <div className="players">
+                            {this.renderPlayers()}
+                        </div>
+                        <div className="tap">
+                            <i className="fa fa-arrow-up"></i>
+                            <p> Tap to see what they voted</p>
+                        </div>
                     </div>
                 </div>
             );
@@ -95,7 +97,7 @@ class Results extends React.Component {
                 return _player.get('name') == this.state.playerShowing
             });
 
-            return <UserVotes player={player} goBack={this.goBack}/>
+            return <UserVotes player={player} goBack={this.goBack}  />
         };
     }
 }

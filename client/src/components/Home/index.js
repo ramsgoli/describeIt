@@ -11,9 +11,6 @@ class Home extends React.Component {
         accessCode: ''
     }
 
-    componentDidMount() {
-    }
-
     setMode = (mode) => {
         this.setState({
             mode: mode

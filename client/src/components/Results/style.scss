@@ -62,4 +62,40 @@
 .player-votes-container {
   height: 100%;
   background-color: $purple;
+  color: $white;
+  
+  .container {
+    display: flex;
+    align-items: flex-start;
+    .heading {
+      width: 350px;
+      height: 90px;
+      background-color: $dark-purple;
+      color: $white;
+      margin: 25px auto 25px auto;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.5em;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .name {
+      display: flex;
+      flex-flow: row;
+    }
+    .quote-text {
+      margin-left: 5px;
+      font-size: 1.2em;
+
+      .name {
+        font-weight: bold;
+        font-size: 1.4em;
+        * {
+          margin: 2px;
+        }
+      }
+    }
+  }
 }

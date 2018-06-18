@@ -43,20 +43,22 @@ class Voting extends React.Component {
         const success = this.props._internal.get('success');
         return(
             <div className="voting-container">
-                <div className="voting-instructions">
-                    Select who you think each submission belongs to
+                <div className="container"> 
+                    <div className="voting-instructions">
+                        Select who you think each submission belongs to
+                    </div>
+                    {this.props.players.map(player => {
+                        return (
+                            <SubmissionContainer 
+                                key={player.get('id')} 
+                                vote={this.vote}
+                                players={this.props.players} 
+                                submission={player.get('submission')}
+                            />
+                        );
+                    })}
+                    <Button onClick={this.submit} disabled={success}>{this.renderButtonContents()}</Button>
                 </div>
-                {this.props.players.map(player => {
-                    return (
-                        <SubmissionContainer 
-                            key={player.get('id')} 
-                            vote={this.vote}
-                            players={this.props.players} 
-                            submission={player.get('submission')}
-                        />
-                    );
-                })}
-                <Button onClick={this.submit} disabled={success}>{this.renderButtonContents()}</Button>
             </div>
         )
     }
