@@ -147,7 +147,9 @@ export const joinGame = (name, accessCode) => {
                 dispatch(joinGameSuccess(resp.accessCode))
             })
             .catch(error => {
-                dispatch(notify({message: error.response.statusText, status: error.response.status, position: 'tc'}))
+                error.response.json().then(err => {
+                    dispatch(notify({message: err.message, status: error.response.status, position: 'tc'}))
+                })
             })
     }
 }
