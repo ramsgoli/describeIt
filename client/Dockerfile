@@ -2,22 +2,28 @@
 FROM alpine:3.5
 
 # install nginx
-RUN apk update && apk add nginx
+RUN apk update && apk add nginx make nodejs
 
-# Creating new user group
-ARG USER=reactor
-ARG GROUP=www-data
+RUN mkdir -p /var/www/describeit/working && \
+    mkdir -p /var/www/describeit/static && \
+    mkdir -p /var/www/describeit/static/build
 
-RUN adduser -D -u 1000 -g '${GROUP}' ${USER} \
-    && mkdir /www /www/build && chown -R ${USER}:${GROUP} /var/lib/nginx && chown -R ${USER}:${GROUP} /www \
-    && mkdir -p /run/nginx/
+WORKDIR /var/www/describeit/working
+COPY *.json /var/www/describeit/working/
+RUN /usr/bin/node --max_semi_space_size=8 \
+                  --max_old_space_size=298 \
+                  --max_executable_size=248 \
+                  /usr/bin/npm install
 
-COPY nginx.conf /etc/nginx/nginx.conf
+# copy source files
+COPY pages/ /var/www/describeit/working/pages/
+COPY src/ /var/www/describeit/working/src/
+COPY .babelrc *.js Makefile /var/www/describeit/working/
 
-COPY public/ /www/
-COPY dist/ /www/
+RUN mkdir -p /etc/nginx
+COPY nginx.conf /etc/nginx/
+WORKDIR /var/www/describeit/static
 
 EXPOSE 8080
 
-CMD ["nginx", "-g", "daemon off;"] 
-
+CMD ["nginx", "-g", "daemon off;"]
