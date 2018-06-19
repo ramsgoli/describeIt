@@ -44,7 +44,6 @@ export const submitVotes = votes => {
 
             return dispatch({type: SUBMIT_VOTE_SUCCESS});
         } catch (err) {
-            console.error(err);
             return dispatch({type: SUBMIT_VOTE_ERROR});
         }
     }

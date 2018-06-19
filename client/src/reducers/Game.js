@@ -177,7 +177,9 @@ export const createGame = (name) => {
                 dispatch(setPlayerId(resp.currentPlayer.id))
             })
             .catch(error => {
-                dispatch(createGameFailure(error.response))
+                error.response.json().then(err => {
+                    dispatch(createGameFailure(err.message))
+                })
             })
     }
 }
@@ -204,7 +206,9 @@ export const startGame = () => {
                 dispatch(setQuestion(resp.question))
             })
             .catch(error => {
-                dispatch(startGameFailure(error))
+                error.response.json().then(err => {
+                    dispatch(startGameFailure(err.message))
+                })
             })
     }
 }

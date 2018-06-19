@@ -63,10 +63,12 @@ export const addSubmission = submission => (dispatch, getState) => {
         .then(res => {
             dispatch(setSubmission(res.submission))
         })
-        .catch(err => {
-            dispatch({
-                type: ADD_SUBMISSION_ERROR,
-                err
+        .catch(error => {
+            error.response.json().then(err => {
+                dispatch({
+                    type: ADD_SUBMISSION_ERROR,
+                    error: err.message
+                });
             })
         })
 }
