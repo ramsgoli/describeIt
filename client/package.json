@@ -1,7 +1,7 @@
 {
-  "name": "reactor",
+  "name": "describeIt",
   "version": "1.0.0",
-  "description": "my react quickstart",
+  "description": "how well do you know your friends",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
