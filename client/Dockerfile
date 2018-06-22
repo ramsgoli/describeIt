@@ -22,7 +22,7 @@ COPY .babelrc *.js Makefile /var/www/describeit/working/
 
 RUN npm run build && \
     cp -rv pages/* ../static/ && \
-    cp -rv lib/build/* ../static/build/
+    cp -rv dist/build/* ../static/build/
 
 RUN mkdir -p /run/nginx
 COPY nginx.conf /etc/nginx/

@@ -1,10 +1,11 @@
-import io from 'socket.io-client'
+import io from 'socket.io-client';
 
-import { store, Actions, gameStates } from '../reducers'
+import Config from '../config';
+import { store, Actions, gameStates } from '../reducers';
 
 class SocketManager {
     constructor() {
-        this.socket = io.connect('http://localhost:8000')
+        this.socket = io.connect(config.API_URL)
 
         this.socket.on('newPlayer', this.onNewPlayer)
         this.socket.on('removePlayer', this.removePlayer)

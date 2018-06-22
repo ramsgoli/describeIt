@@ -1,5 +1,11 @@
 version: '3'
 services:
+  frontend:
+    build: ./client
+    ports:
+      - "80:80"
+    depends_on:
+      - web
   web:
     build: ./server
     env_file:
