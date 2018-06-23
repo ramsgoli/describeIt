@@ -22,7 +22,7 @@ router.post('/', async (req, res, next) => {
     //try to get the socket from the socketid
     const socket = req.io.sockets.connected[socketId]
     if (!socket) {
-        return next(new BadRequest("Socket ID was not matched"));
+        return next(new errors.BadRequest("Socket ID was not matched"));
     }
 
     let accessCode
