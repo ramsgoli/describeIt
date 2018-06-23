@@ -28,6 +28,6 @@ RUN mkdir -p /run/nginx
 COPY nginx.conf /etc/nginx/
 WORKDIR /var/www/describeit/static
 
-EXPOSE 8080
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
