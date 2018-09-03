@@ -4,6 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
+  mode: process.env.NODE_ENV || 'production',
   entry: {
     main: ['index.js',]
   },
@@ -13,7 +14,7 @@ module.exports = {
   },
   resolve: {
     modules: [path.resolve(__dirname, "src"), "node_modules"],
-  },  
+  },
   module: {
     rules: [
       {
@@ -23,7 +24,7 @@ module.exports = {
       {
         test: /\.s?css$/,
         use: [{
-          loader: 'style-loader' 
+          loader: 'style-loader'
         }, {
           loader: 'css-loader'
         }, {
@@ -59,9 +60,10 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     hot: true,
-    contentBase: [path.join(__dirname, 'public')],
+    contentBase: path.join(__dirname, 'pages'),
     host: '0.0.0.0',
     disableHostCheck: true,
-    port: 8080
+    port: 8080,
+    publicPath: '/'
   }
 }
