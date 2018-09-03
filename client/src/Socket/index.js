@@ -5,7 +5,7 @@ import { store, Actions, gameStates } from '../reducers';
 
 class SocketManager {
     constructor() {
-        this.socket = io.connect(Config.API_URL)
+        this.socket = io(Config.WS_URL)
 
         this.socket.on('newPlayer', this.onNewPlayer)
         this.socket.on('removePlayer', this.removePlayer)
